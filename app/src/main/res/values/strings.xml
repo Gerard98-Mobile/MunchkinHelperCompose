@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MunchkinHelperCompose</string>
+    <string name="new_game">New game</string>
+    <string name="load_game">Load game</string>
+    <string name="restore_game">Restore game</string>
+    <string name="player_name">Player name</string>
+    <string name="quick_select">Quick select</string>
+    <string name="hide">Hide</string>
+    <string name="start">Start</string>
+    <string name="dice">Dice</string>
+    <string name="game">Game</string>
+    <string name="fight">Fight</string>
+    <string name="throw_dice">Throw</string>
+    <string name="power">power</string>
+    <string name="level">level</string>
+    <string name="players">Players</string>
+    <string name="monsters">Monsters</string>
+    <string name="not_enough_players_error">Game need to have at least 2 players</string>
+</resources>

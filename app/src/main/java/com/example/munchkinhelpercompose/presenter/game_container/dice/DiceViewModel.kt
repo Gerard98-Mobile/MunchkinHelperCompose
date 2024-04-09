@@ -1,0 +1,24 @@
+package com.example.munchkinhelpercompose.presenter.game_container.dice
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+class DiceViewModel : ViewModel() {
+
+    data class DiceThrow(
+        val rollCounter: Int,
+        val result: Int = (1..6).random(),
+    )
+
+    private var throwCounter = 0
+
+    private val _dice = MutableStateFlow<DiceThrow?>(null)
+    val dice = _dice.asStateFlow()
+
+    fun throwDice() = viewModelScope.launch {
+        _dice.value = DiceThrow(++throwCounter)
+    }
+}
