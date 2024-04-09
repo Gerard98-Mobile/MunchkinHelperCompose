@@ -7,7 +7,7 @@ import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.Views
@@ -26,7 +26,7 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     navController: NavController,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) = Column(Modifier.fillMaxSize()) {
 
     val state = viewModel.state.collectAsState().value

@@ -1,10 +1,10 @@
 package com.example.munchkinhelpercompose.use_case.game
 
 import com.example.munchkinhelpercompose.data.GameRepository
-import com.example.munchkinhelpercompose.data.StoreGameRepository
+import javax.inject.Inject
 
-class CreateGameUseCase(
-    private val repository: GameRepository = StoreGameRepository()
+class CreateGameUseCase @Inject constructor(
+    private val repository: GameRepository
 ) {
     suspend operator fun invoke(players: List<String>) {
         repository.create(players)

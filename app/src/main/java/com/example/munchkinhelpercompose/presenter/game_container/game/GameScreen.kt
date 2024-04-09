@@ -26,7 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.defaults.MHCardDefaults
@@ -47,7 +47,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun GameScreen(
     navController: NavController,
-    viewModel: GameViewModel = viewModel(),
+    viewModel: GameViewModel = hiltViewModel(),
     state: GameViewModel.State = viewModel.state.collectAsState().value
 ) {
     LaunchedEffect(null) {
@@ -119,7 +119,7 @@ fun GameScreen(
 @Composable
 private fun SelectedPlayerBox(
     player: Player,
-    viewModel: GameViewModel = viewModel(),
+    viewModel: GameViewModel = hiltViewModel(),
 ) = Column(
     Modifier
         .fillMaxWidth()

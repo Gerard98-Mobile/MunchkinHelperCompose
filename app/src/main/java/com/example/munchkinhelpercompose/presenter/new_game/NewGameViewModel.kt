@@ -5,19 +5,21 @@ import androidx.lifecycle.viewModelScope
 import com.example.munchkinhelpercompose.use_case.game.CreateGameUseCase
 import com.example.munchkinhelpercompose.use_case.hint.GetHintsUseCase
 import com.example.munchkinhelpercompose.use_case.hint.SaveHintsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewGameViewModel(
-    private val getHints: GetHintsUseCase = GetHintsUseCase(),
-    private val saveHints: SaveHintsUseCase = SaveHintsUseCase(),
-    private val createGame: CreateGameUseCase = CreateGameUseCase(),
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+@HiltViewModel
+class NewGameViewModel @Inject constructor(
+    private val getHints: GetHintsUseCase,
+    private val saveHints: SaveHintsUseCase,
+    private val createGame: CreateGameUseCase,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     data class UiState(

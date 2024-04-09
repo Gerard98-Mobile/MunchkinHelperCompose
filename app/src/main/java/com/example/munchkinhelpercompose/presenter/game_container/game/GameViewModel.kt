@@ -6,6 +6,7 @@ import com.example.munchkinhelpercompose.model.Game
 import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.use_case.game.GetGameUseCase
 import com.example.munchkinhelpercompose.use_case.game.UpdateGamePlayerUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,12 +16,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GameViewModel(
-    private val getGame: GetGameUseCase = GetGameUseCase(),
-    private val updatePlayer: UpdateGamePlayerUseCase = UpdateGamePlayerUseCase(),
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+@HiltViewModel
+class GameViewModel @Inject constructor(
+    private val getGame: GetGameUseCase,
+    private val updatePlayer: UpdateGamePlayerUseCase
 ) : ViewModel() {
+
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
 
     data class State(

@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.ui.Dice
 import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
@@ -42,7 +42,7 @@ fun DiceBottomSheet(
 
 @Composable
 fun DiceScreenContent(
-    viewModel : DiceViewModel = viewModel()
+    viewModel : DiceViewModel = hiltViewModel()
 ) {
     val diceSize = 60.dp
 

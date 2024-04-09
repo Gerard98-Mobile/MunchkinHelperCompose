@@ -4,17 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munchkinhelpercompose.model.Game
 import com.example.munchkinhelpercompose.use_case.game.GetGameUseCase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(
-    private val getGame: GetGameUseCase = GetGameUseCase(),
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getGame: GetGameUseCase
 ) : ViewModel() {
 
     data class State(
@@ -28,7 +28,7 @@ class HomeViewModel(
         collectPreviousGame()
     }
 
-    private fun collectPreviousGame() = viewModelScope.launch(dispatcher) {
+    private fun collectPreviousGame() = viewModelScope.launch {
         getGame.invoke().collectLatest { game ->
             _state.update {
                 it.copy(previousGame = game)

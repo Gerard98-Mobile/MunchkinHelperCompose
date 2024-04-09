@@ -20,12 +20,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.ui.components.PrimaryBorder
 import com.example.munchkinhelpercompose.model.Player
+import com.example.munchkinhelpercompose.ui.components.PrimaryBorder
 import com.example.munchkinhelpercompose.ui.components.SpacerW
-import com.example.munchkinhelpercompose.ui.components.image.ResIcon
 import com.example.munchkinhelpercompose.ui.components.image.ResImage
 
 @Composable
@@ -59,7 +58,7 @@ fun PlayersHeader() = Column(
 fun Player(
     player: Player,
     isSelected: Boolean,
-    viewModel: GameViewModel = viewModel()
+    viewModel: GameViewModel = hiltViewModel()
 ){
     val state = viewModel.state.collectAsState().value
     val isLeader = state.isLeader(player)

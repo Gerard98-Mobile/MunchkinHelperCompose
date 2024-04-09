@@ -2,11 +2,12 @@ package com.example.munchkinhelpercompose.use_case.game
 
 import com.example.munchkinhelpercompose.model.Game
 import com.example.munchkinhelpercompose.model.Player
+import javax.inject.Inject
 
 
-class UpdateGamePlayerUseCase(
-    private val updateGame: UpdateGameUseCase = UpdateGameUseCase(),
-    private val updatePlayer: UpdatePlayerUseCase = UpdatePlayerUseCase()
+class UpdateGamePlayerUseCase @Inject constructor(
+    private val updateGame: UpdateGameUseCase,
+    private val updatePlayer: UpdatePlayerUseCase
 ) {
     suspend operator fun invoke(player: Player, update: Player.() -> Player, game: Game): Game? {
         val updated = updatePlayer(player, update) ?: return null

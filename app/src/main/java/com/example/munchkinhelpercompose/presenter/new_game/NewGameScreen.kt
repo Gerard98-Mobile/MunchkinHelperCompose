@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.Views
@@ -72,7 +72,7 @@ private fun NewGameScreenToolbar(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
     scope : CoroutineScope = rememberCoroutineScope(),
-    viewModel : NewGameViewModel = viewModel()
+    viewModel : NewGameViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState().value
     val playersCountError = stringResource(id = R.string.not_enough_players_error)
@@ -100,7 +100,7 @@ private fun NewGameScreenToolbar(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun NewGameScreenContent(
-    viewModel : NewGameViewModel = viewModel()
+    viewModel : NewGameViewModel = hiltViewModel()
 ) = Column {
 
     val state = viewModel.state.collectAsState().value
@@ -126,7 +126,7 @@ private fun NewGameScreenContent(
 
 @Composable
 private fun NewGameHintBox(
-    viewModel: NewGameViewModel = viewModel()
+    viewModel: NewGameViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState().value
 
@@ -149,7 +149,7 @@ private fun NewGameHintBox(
 @Composable
 private fun Hint(
     hint: String,
-    viewModel: NewGameViewModel = viewModel()
+    viewModel: NewGameViewModel = hiltViewModel()
 ) {
     MHTextButton(string = hint) {
         viewModel.addPlayer(hint)

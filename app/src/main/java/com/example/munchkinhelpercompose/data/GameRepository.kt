@@ -6,10 +6,12 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.munchkinhelpercompose.model.Game
 import com.example.munchkinhelpercompose.model.Player
-import com.example.munchkinhelpercompose.AppStore
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 interface GameRepository {
     suspend fun get(): Flow<Game?>
@@ -17,17 +19,18 @@ interface GameRepository {
     suspend fun create(players: List<String>)
 }
 
-class StoreGameRepository(
-    private val dataStore: DataStore<Preferences> = AppStore.dataStore,
-    private val gson: Gson = Gson()
+class StoreGameRepository @Inject constructor(
+    private val dataStore: DataStore<Preferences>,
+    private val gson: Gson,
+    private val ioDispatcher: CoroutineDispatcher,
 ): GameRepository {
 
     companion object {
         private val GAME_KEY = stringPreferencesKey("game_key")
     }
 
-    override suspend fun get(): Flow<Game?> {
-        return dataStore.data.map {
+    override suspend fun get(): Flow<Game?> = withContext(ioDispatcher) {
+        return@withContext dataStore.data.map {
             it[GAME_KEY]?.let { data ->
                 gson.fromJson(data, Game::class.java)
             }
@@ -35,21 +38,25 @@ class StoreGameRepository(
     }
 
     override suspend fun update(game: Game) {
-        dataStore.edit {
-            it[GAME_KEY] = gson.toJson(game)
+        withContext(ioDispatcher) {
+            dataStore.edit {
+                it[GAME_KEY] = gson.toJson(game)
+            }
         }
     }
 
     override suspend fun create(players: List<String>) {
-        dataStore.edit {
-            val game = Game(
-                players = buildSet {
-                    players.forEach {
-                        add(Player(it))
+        withContext(ioDispatcher) {
+            dataStore.edit {
+                val game = Game(
+                    players = buildSet {
+                        players.forEach {
+                            add(Player(it))
+                        }
                     }
-                }
-            )
-            it[GAME_KEY] = gson.toJson(game)
+                )
+                it[GAME_KEY] = gson.toJson(game)
+            }
         }
     }
 
