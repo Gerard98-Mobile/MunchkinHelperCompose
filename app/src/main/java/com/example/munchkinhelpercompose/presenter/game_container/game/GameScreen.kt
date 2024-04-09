@@ -1,5 +1,6 @@
 package com.example.munchkinhelpercompose.presenter.game_container.game
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -186,14 +187,8 @@ private fun RowScope.UpdatePlayerBox(
     Row(
         horizontalArrangement = Arrangement.Center
     ) {
-        Card(
-            border = PrimaryBorder(),
-            onClick = { onChange(-1) }
-        ) {
-            ResIcon(
-                modifier = Modifier.padding(8.dp),
-                id = R.drawable.ic_minus
-            )
+        ModificationButton(R.drawable.ic_minus) {
+            onChange(-1)
         }
 
         SpacerW(dp = 5.dp)
@@ -205,15 +200,25 @@ private fun RowScope.UpdatePlayerBox(
 
         SpacerW(dp = 5.dp)
 
-        Card(
-            border = PrimaryBorder(),
-            onClick = { onChange(+1) }
-        ) {
-            ResIcon(
-                modifier = Modifier.padding(8.dp),
-                id = R.drawable.ic_add
-            )
+        ModificationButton(R.drawable.ic_add) {
+            onChange(+1)
         }
+    }
+}
+
+@Composable
+private fun ModificationButton(
+    @DrawableRes drawableRes: Int,
+    onClick: () -> Unit
+) {
+    Card(
+        border = PrimaryBorder(),
+        onClick = onClick
+    ) {
+        ResIcon(
+            modifier = Modifier.padding(12.dp),
+            id = drawableRes
+        )
     }
 }
 
