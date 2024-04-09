@@ -2,11 +2,13 @@ package com.example.munchkinhelpercompose.presenter.game_container.game
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,7 +55,7 @@ fun GameScreen(
 ) {
     LaunchedEffect(null) {
         viewModel.winner.collectLatest {
-            navController.navigate("winner")
+//            navController.navigate("winner")
         }
     }
 
@@ -130,10 +132,7 @@ private fun SelectedPlayerBox(
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ClickableResIcon(
-            modifier = Modifier.size(32.dp),
-            id = R.drawable.ic_swords
-        ) {
+        ClickableResIcon(id = R.drawable.ic_swords) {
             viewModel.isFightDialogVisible(true)
         }
 
@@ -144,10 +143,7 @@ private fun SelectedPlayerBox(
             modifier = Modifier.weight(1f)
         )
 
-        ClickableResIcon(
-            modifier = Modifier.size(32.dp),
-            id = R.drawable.ic_grim_reaper
-        ) {
+        ClickableResIcon(id = R.drawable.ic_grim_reaper) {
 
         }
 
@@ -198,7 +194,9 @@ private fun RowScope.UpdatePlayerBox(
         color = MaterialTheme.colorScheme.primary,
     )
 
-    Row {
+    Row(
+        horizontalArrangement = Arrangement.Center
+    ) {
         Card(
             border = PrimaryBorder(),
             onClick = { onChange(-1) }
@@ -211,7 +209,10 @@ private fun RowScope.UpdatePlayerBox(
 
         SpacerW(dp = 5.dp)
 
-        AnimatedCounter(value = value(player))
+        AnimatedCounter(
+            value = value(player),
+            modifier = Modifier.defaultMinSize(minWidth = 40.dp)
+        )
 
         SpacerW(dp = 5.dp)
 
