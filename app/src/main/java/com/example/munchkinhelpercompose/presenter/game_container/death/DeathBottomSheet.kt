@@ -23,7 +23,7 @@ import com.example.munchkinhelpercompose.ui.theme.MHColor
 import com.example.munchkinhelpercompose.util.str
 
 data class DeathResult(
-    private val killPlayer: Boolean = false
+    val killPlayer: Boolean = false
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

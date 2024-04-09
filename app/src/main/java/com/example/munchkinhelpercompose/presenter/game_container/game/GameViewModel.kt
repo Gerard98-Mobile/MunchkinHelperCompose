@@ -2,6 +2,7 @@ package com.example.munchkinhelpercompose.presenter.game_container.game
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.munchkinhelpercompose.SoundManager
 import com.example.munchkinhelpercompose.model.Game
 import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.use_case.game.GetGameUseCase
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class GameViewModel @Inject constructor(
     private val getGame: GetGameUseCase,
-    private val updatePlayer: UpdateGamePlayerUseCase
+    private val updatePlayer: UpdateGamePlayerUseCase,
+    private val soundManager: SoundManager
 ) : ViewModel() {
 
     data class State(
@@ -69,6 +71,10 @@ class GameViewModel @Inject constructor(
         this.copy(visibleBottomSheet = null)
     }
 
+    fun playSound(effect: SoundManager.Effect) {
+        soundManager.play(effect)
+    }
+
     fun update(
         change: Player.() -> Player
     ) = state.value.let { state ->
@@ -89,4 +95,8 @@ class GameViewModel @Inject constructor(
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        soundManager.release()
+    }
 }
