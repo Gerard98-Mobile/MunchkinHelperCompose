@@ -1,5 +1,8 @@
 package com.example.munchkinhelpercompose.presenter.game_container.game
 
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.ExperimentalTransitionApi
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,10 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -52,12 +58,15 @@ fun PlayersHeader() = Column(
         )
         ResIcon(
             id = R.drawable.ic_grim_reaper,
-            modifier = Modifier.size(26.dp).weight(0.1f),
+            modifier = Modifier
+                .size(26.dp)
+                .weight(0.1f),
             tint = MaterialTheme.colorScheme.primary
         )
     }
 }
 
+@OptIn(ExperimentalTransitionApi::class)
 @Composable
 fun Player(
     player: Player,
@@ -67,10 +76,21 @@ fun Player(
     val state = viewModel.state.collectAsState().value
     val isLeader = state.isLeader(player)
 
+    val baseColor = MaterialTheme.colorScheme.primaryContainer
+    val color = remember { Animatable(baseColor) }
+
+    if (isLeader) {
+        LaunchedEffect(null) {
+            color.animateTo(MHColor.crown, animationSpec = tween(500))
+            color.animateTo(baseColor, animationSpec = tween(500))
+        }
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 5.dp),
+        colors = CardDefaults.cardColors(containerColor = color.value),
         border = if (isSelected) PrimaryBorder() else null,
         content = { PlayerContent(player, isLeader) },
         onClick = { viewModel.select(player) }

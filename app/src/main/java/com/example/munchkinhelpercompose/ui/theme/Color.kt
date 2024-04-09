@@ -71,5 +71,6 @@ object MHColor {
     val negative = Color(0xFFE96D72)
     val default = Color(0xFFC0C0C0)
     val default_dark = Color(0xFF868686)
+    val crown = Color(0xFFFFEA80)
 }
 
