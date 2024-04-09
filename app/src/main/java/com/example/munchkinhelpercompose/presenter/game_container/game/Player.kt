@@ -85,14 +85,13 @@ private fun PlayerContent(
     Row(Modifier.padding(PLAYER_ENTRY_PADDING)) {
         Row(Modifier.weight(0.5f)) {
             if (isLeader) {
-                SpacerW(dp = 10.dp)
-
                 ResImage(
                     id = R.drawable.crown,
                     modifier = Modifier
                         .size(24.dp)
                         .align(Alignment.CenterVertically)
                 )
+                SpacerW(dp = 10.dp)
             }
             Text(
                 text = player.name,
