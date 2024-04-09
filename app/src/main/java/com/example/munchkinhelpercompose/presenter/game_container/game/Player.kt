@@ -52,7 +52,7 @@ fun PlayersHeader() = Column(
         )
         ResIcon(
             id = R.drawable.ic_grim_reaper,
-            modifier = Modifier.weight(0.1f),
+            modifier = Modifier.size(26.dp).weight(0.1f),
             tint = MaterialTheme.colorScheme.primary
         )
     }
