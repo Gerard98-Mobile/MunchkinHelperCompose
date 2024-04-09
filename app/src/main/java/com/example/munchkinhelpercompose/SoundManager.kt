@@ -11,7 +11,8 @@ class SoundManager(context: Context) {
     ) {
         LEVEL_UP(R.raw.level_up),
         LEVEL_DOWN(R.raw.level_down),
-        DEATH(R.raw.you_lose)
+        DEATH(R.raw.you_lose),
+        WIN(R.raw.win_sound),
     }
 
     private val soundPool = SoundPool.Builder().build()

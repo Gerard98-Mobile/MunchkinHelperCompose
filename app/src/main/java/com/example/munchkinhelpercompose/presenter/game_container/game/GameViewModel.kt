@@ -71,10 +71,6 @@ class GameViewModel @Inject constructor(
         this.copy(visibleBottomSheet = null)
     }
 
-    fun playSound(effect: SoundManager.Effect) {
-        soundManager.play(effect)
-    }
-
     fun update(
         change: Player.() -> Player
     ) = state.value.let { state ->
@@ -82,16 +78,26 @@ class GameViewModel @Inject constructor(
 
         viewModelScope.launch {
             val result = updatePlayer.invoke(state.selected, change, state.game) ?: return@launch
+            val player = result.players.find { it.name ==  state.selected.name } ?: return@launch
 
-            val player = result.players.find { it.name ==  state.selected.name }
+            playChangeSound(state.selected, player)
             _state.value = state.copy(
                 game = result,
                 selected = player,
             )
 
-            if (player?.level == 10) {
+            if (player.level == 10) {
                 _winner.emit(player)
             }
+        }
+    }
+
+    private fun playChangeSound(player: Player, changedPlayer: Player) {
+        when {
+            changedPlayer.level == 10 -> soundManager.play(SoundManager.Effect.WIN)
+            player.level < changedPlayer.level -> soundManager.play(SoundManager.Effect.LEVEL_UP)
+            player.level > changedPlayer.level -> soundManager.play(SoundManager.Effect.LEVEL_DOWN)
+            player.deaths < changedPlayer.deaths -> soundManager.play(SoundManager.Effect.DEATH)
         }
     }
 

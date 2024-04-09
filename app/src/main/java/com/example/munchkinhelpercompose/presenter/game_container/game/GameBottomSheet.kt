@@ -2,7 +2,6 @@ package com.example.munchkinhelpercompose.presenter.game_container.game
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import com.example.munchkinhelpercompose.SoundManager
 import com.example.munchkinhelpercompose.presenter.game_container.death.DeathBottomSheet
 import com.example.munchkinhelpercompose.presenter.game_container.dice.DiceBottomSheet
 import com.example.munchkinhelpercompose.presenter.game_container.fight.FightBottomSheet
@@ -14,7 +13,6 @@ enum class GameBottomSheet(val content: @Composable (GameViewModel) -> Unit) {
             DeathBottomSheet(viewModel.state.value.selected?.name ?: "") {
                 viewModel.hideBottomSheet()
                 if (it.killPlayer) {
-                    viewModel.playSound(SoundManager.Effect.DEATH)
                     viewModel.update {
                         copy(
                             deaths = this.deaths + 1

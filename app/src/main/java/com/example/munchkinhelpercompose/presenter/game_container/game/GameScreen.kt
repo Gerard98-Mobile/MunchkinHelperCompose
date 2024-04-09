@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.SoundManager
 import com.example.munchkinhelpercompose.defaults.MHCardDefaults
 import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.ui.DiceFive
@@ -162,7 +161,6 @@ private fun SelectedPlayerBox(
                     this.copy(level = level + it)
                 }
             },
-            playSoundOnChange = true,
             player = player
         )
     }
@@ -176,8 +174,6 @@ private fun RowScope.UpdatePlayerBox(
     value: (Player) -> Int,
     onChange: (Int) -> Unit,
     player: Player,
-    playSoundOnChange: Boolean = false,
-    viewModel: GameViewModel = hiltViewModel(),
 ) = Column(
     modifier = Modifier.weight(1f),
     horizontalAlignment = Alignment.CenterHorizontally
@@ -193,7 +189,6 @@ private fun RowScope.UpdatePlayerBox(
     ) {
         ModificationButton(R.drawable.ic_minus) {
             onChange(-1)
-            if (playSoundOnChange) viewModel.playSound(SoundManager.Effect.LEVEL_DOWN)
         }
 
         SpacerW(dp = 5.dp)
@@ -207,7 +202,6 @@ private fun RowScope.UpdatePlayerBox(
 
         ModificationButton(R.drawable.ic_add) {
             onChange(+1)
-            if (playSoundOnChange) viewModel.playSound(SoundManager.Effect.LEVEL_UP)
         }
     }
 }
