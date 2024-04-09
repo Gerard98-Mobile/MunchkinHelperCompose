@@ -7,8 +7,6 @@ import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.use_case.game.GetGameUseCase
 import com.example.munchkinhelpercompose.use_case.game.UpdateGamePlayerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -23,9 +21,6 @@ class GameViewModel @Inject constructor(
     private val getGame: GetGameUseCase,
     private val updatePlayer: UpdateGamePlayerUseCase
 ) : ViewModel() {
-
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-
 
     data class State(
         val game: Game? = null,
@@ -51,7 +46,7 @@ class GameViewModel @Inject constructor(
         collectGame()
     }
 
-    private fun collectGame() = viewModelScope.launch(dispatcher) {
+    private fun collectGame() = viewModelScope.launch {
         getGame.invoke().first().let { game ->
             _state.update {
                 it.copy(game = game)
@@ -80,7 +75,7 @@ class GameViewModel @Inject constructor(
     ) = state.value.let { state ->
         if (state.selected == null || state.game == null) return@let
 
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch {
             val result = updatePlayer.invoke(state.selected, change, state.game) ?: return@launch
 
             val player = result.players.find { it.name ==  state.selected.name }
