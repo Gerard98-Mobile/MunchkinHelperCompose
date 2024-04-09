@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,8 +32,6 @@ import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.defaults.MHCardDefaults
 import com.example.munchkinhelpercompose.model.Player
-import com.example.munchkinhelpercompose.presenter.game_container.dice.DiceBottomSheet
-import com.example.munchkinhelpercompose.presenter.game_container.fight.FightBottomSheet
 import com.example.munchkinhelpercompose.ui.DiceFive
 import com.example.munchkinhelpercompose.ui.components.AnimatedCounter
 import com.example.munchkinhelpercompose.ui.components.AutoSizeText
@@ -46,7 +43,7 @@ import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 import com.example.munchkinhelpercompose.ui.components.image.ResIcon
 import kotlinx.coroutines.flow.collectLatest
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GameScreen(
     navController: NavController,
@@ -87,7 +84,7 @@ fun GameScreen(
                         .padding(10.dp),
                     colors = MHCardDefaults.transparentCardColors(),
                     onClick = {
-                        viewModel.isDiceDialogVisible(true)
+                        viewModel.showBottomSheet(GameBottomSheet.DICE)
                     }
                 ) {
                     DiceFive(Modifier.size(48.dp))
@@ -105,16 +102,8 @@ fun GameScreen(
             }
         }
 
-        if (state.isFightDialogVisible) {
-            FightBottomSheet(initialValue = state.selected?.powerWithLevel) {
-                viewModel.isFightDialogVisible(false)
-            }
-        }
-
-        if (state.isDiceDialogVisible) {
-            DiceBottomSheet {
-                viewModel.isDiceDialogVisible(false)
-            }
+        state.visibleBottomSheet?.let {
+            it.content(viewModel)
         }
     }
 }
@@ -133,7 +122,7 @@ private fun SelectedPlayerBox(
         verticalAlignment = Alignment.CenterVertically
     ) {
         ClickableResIcon(id = R.drawable.ic_swords) {
-            viewModel.isFightDialogVisible(true)
+            viewModel.showBottomSheet(GameBottomSheet.FIGHT)
         }
 
         AutoSizeText(
@@ -144,7 +133,7 @@ private fun SelectedPlayerBox(
         )
 
         ClickableResIcon(id = R.drawable.ic_grim_reaper) {
-
+            viewModel.showBottomSheet(GameBottomSheet.DEATH)
         }
 
     }
