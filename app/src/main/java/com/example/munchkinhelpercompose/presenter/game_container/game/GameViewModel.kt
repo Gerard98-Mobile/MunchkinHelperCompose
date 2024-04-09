@@ -2,10 +2,10 @@ package com.example.munchkinhelpercompose.presenter.game_container.game
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.munchkinhelpercompose.SoundManager
 import com.example.munchkinhelpercompose.model.Game
 import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.use_case.game.GetGameUseCase
+import com.example.munchkinhelpercompose.use_case.game.PlayPlayerChangeSoundEffectUseCase
 import com.example.munchkinhelpercompose.use_case.game.UpdateGamePlayerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class GameViewModel @Inject constructor(
     private val getGame: GetGameUseCase,
     private val updatePlayer: UpdateGamePlayerUseCase,
-    private val soundManager: SoundManager
+    private val playChangeSound: PlayPlayerChangeSoundEffectUseCase
 ) : ViewModel() {
 
     data class State(
@@ -80,7 +80,7 @@ class GameViewModel @Inject constructor(
             val result = updatePlayer.invoke(state.selected, change, state.game) ?: return@launch
             val player = result.players.find { it.name ==  state.selected.name } ?: return@launch
 
-            playChangeSound(state.selected, player)
+            playChangeSound.invoke(state.selected, player)
             _state.value = state.copy(
                 game = result,
                 selected = player,
@@ -90,19 +90,5 @@ class GameViewModel @Inject constructor(
                 _winner.emit(player)
             }
         }
-    }
-
-    private fun playChangeSound(player: Player, changedPlayer: Player) {
-        when {
-            changedPlayer.level == 10 -> soundManager.play(SoundManager.Effect.WIN)
-            player.level < changedPlayer.level -> soundManager.play(SoundManager.Effect.LEVEL_UP)
-            player.level > changedPlayer.level -> soundManager.play(SoundManager.Effect.LEVEL_DOWN)
-            player.deaths < changedPlayer.deaths -> soundManager.play(SoundManager.Effect.DEATH)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        soundManager.release()
     }
 }
