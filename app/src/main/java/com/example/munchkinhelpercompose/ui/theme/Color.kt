@@ -66,7 +66,10 @@ val md_theme_dark_scrim = Color(0xFF000000)
 
 val seed = Color(0xFF572C21)
 
-val positive = Color(0xFF77dd77)
-val negative = Color(0xFFE96D72)
-val default = Color(0xFFC0C0C0)
+object MHColor {
+    val positive = Color(0xFF77dd77)
+    val negative = Color(0xFFE96D72)
+    val default = Color(0xFFC0C0C0)
+    val default_dark = Color(0xFF868686)
+}
 

@@ -9,9 +9,14 @@ import com.example.munchkinhelpercompose.presenter.game_container.fight.FightBot
 @OptIn(ExperimentalMaterial3Api::class)
 enum class GameBottomSheet(val content: @Composable (GameViewModel) -> Unit) {
     DEATH(
-        content = {
-            DeathBottomSheet {
-                it.hideBottomSheet()
+        content = { viewModel ->
+            DeathBottomSheet(viewModel.state.value.selected?.name ?: "") {
+                viewModel.hideBottomSheet()
+                viewModel.update {
+                    copy(
+                        deaths = this.deaths + 1
+                    )
+                }
             }
         }
     ),

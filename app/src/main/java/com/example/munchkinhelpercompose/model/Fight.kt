@@ -2,9 +2,7 @@ package com.example.munchkinhelpercompose.model
 
 import androidx.annotation.IntRange
 import androidx.compose.ui.graphics.Color
-import com.example.munchkinhelpercompose.ui.theme.default
-import com.example.munchkinhelpercompose.ui.theme.negative
-import com.example.munchkinhelpercompose.ui.theme.positive
+import com.example.munchkinhelpercompose.ui.theme.MHColor
 
 typealias FightSide = Int
 
@@ -13,9 +11,9 @@ class Fight private constructor(
 ) {
 
     enum class Result(val color: Color) {
-        WINNER(positive),
-        DRAW(default),
-        LOSSER(negative)
+        WINNER(MHColor.positive),
+        DRAW(MHColor.default),
+        LOSSER(MHColor.negative)
     }
 
     companion object {
