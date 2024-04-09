@@ -7,16 +7,14 @@ import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.Views
-import com.example.munchkinhelpercompose.ui.components.ColumnCentered
-import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
-import com.example.munchkinhelpercompose.store.GameStore
 import com.example.munchkinhelpercompose.navigate
 import com.example.munchkinhelpercompose.ui.Logo
+import com.example.munchkinhelpercompose.ui.components.ColumnCentered
+import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
 
 @Composable
 fun HomeScreen(

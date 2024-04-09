@@ -24,13 +24,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.store.GameStore
 import com.example.munchkinhelpercompose.defaults.MHCardDefaults
 import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.presenter.game_container.dice.DiceBottomSheet
@@ -49,7 +47,6 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun GameScreen(
     navController: NavController,
-    store: GameStore = GameStore(),
     viewModel: GameViewModel = viewModel(),
     state: GameViewModel.State = viewModel.state.collectAsState().value
 ) {
@@ -123,7 +120,6 @@ fun GameScreen(
 private fun SelectedPlayerBox(
     player: Player,
     viewModel: GameViewModel = viewModel(),
-    store: GameStore = GameStore(),
 ) = Column(
     Modifier
         .fillMaxWidth()
