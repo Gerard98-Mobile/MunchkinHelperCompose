@@ -16,7 +16,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class GameModule {
+object GameModule {
 
     @Provides
     fun provideGameRepository(

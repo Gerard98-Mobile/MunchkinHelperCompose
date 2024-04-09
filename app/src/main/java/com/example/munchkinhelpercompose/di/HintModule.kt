@@ -14,7 +14,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class HintModule {
+object HintModule {
 
     @Provides
     fun provideHintRepository(
