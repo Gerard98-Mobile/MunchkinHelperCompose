@@ -34,6 +34,7 @@ import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.presenter.game_container.dice.DiceBottomSheet
 import com.example.munchkinhelpercompose.presenter.game_container.fight.FightBottomSheet
 import com.example.munchkinhelpercompose.ui.DiceFive
+import com.example.munchkinhelpercompose.ui.components.AnimatedCounter
 import com.example.munchkinhelpercompose.ui.components.AutoSizeText
 import com.example.munchkinhelpercompose.ui.components.PrimaryBorder
 import com.example.munchkinhelpercompose.ui.components.SpacerH
@@ -198,7 +199,6 @@ private fun RowScope.UpdatePlayerBox(
     )
 
     Row {
-
         Card(
             border = PrimaryBorder(),
             onClick = { onChange(-1) }
@@ -211,11 +211,7 @@ private fun RowScope.UpdatePlayerBox(
 
         SpacerW(dp = 5.dp)
 
-        Text(
-            text = value(player).toString(),
-            style = MaterialTheme.typography.displaySmall,
-            color = MaterialTheme.colorScheme.primary,
-        )
+        AnimatedCounter(value = value(player))
 
         SpacerW(dp = 5.dp)
 
