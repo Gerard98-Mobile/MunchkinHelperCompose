@@ -14,9 +14,7 @@ enum class GameBottomSheet(val content: @Composable (GameViewModel) -> Unit) {
                 viewModel.hideBottomSheet()
                 if (it.killPlayer) {
                     viewModel.update {
-                        copy(
-                            deaths = this.deaths + 1
-                        )
+                        this.kill()
                     }
                 }
             }

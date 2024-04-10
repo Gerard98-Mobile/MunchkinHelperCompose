@@ -10,9 +10,9 @@ class PlayPlayerChangeSoundEffectUseCase @Inject constructor(
     operator fun invoke(player: Player, changedPlayer: Player) {
         when {
             changedPlayer.level == 10 -> soundManager.play(SoundManager.Effect.WIN)
+            player.deaths < changedPlayer.deaths -> soundManager.play(SoundManager.Effect.DEATH)
             player.level < changedPlayer.level -> soundManager.play(SoundManager.Effect.LEVEL_UP)
             player.level > changedPlayer.level -> soundManager.play(SoundManager.Effect.LEVEL_DOWN)
-            player.deaths < changedPlayer.deaths -> soundManager.play(SoundManager.Effect.DEATH)
         }
     }
 }
