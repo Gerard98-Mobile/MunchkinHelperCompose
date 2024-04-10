@@ -36,8 +36,4 @@ class SoundManager(context: Context) {
         soundPool.play(it, 1f, 1f, effect.priority, 0, 1f)
     }
 
-    fun release() {
-        soundPool.release()
-    }
-
 }
