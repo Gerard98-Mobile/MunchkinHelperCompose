@@ -2,38 +2,81 @@ package com.example.munchkinhelpercompose.presenter.game_container.game
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.presenter.game_container.death.DeathBottomSheet
 import com.example.munchkinhelpercompose.presenter.game_container.dice.DiceBottomSheet
 import com.example.munchkinhelpercompose.presenter.game_container.fight.FightDialog
+import com.example.munchkinhelpercompose.presenter.game_container.winner.WinnerDialog
+
+sealed class GameDialog(
+    val content: @Composable (GameViewModel) -> Unit
+) {
+
+    class Death: GameDialog(
+        content = { DeathDialogContent() }
+    )
+
+    class Dice: GameDialog(
+        content = { DiceDialogContent() }
+    )
+
+    class Fight: GameDialog(
+        content = { FightDialogContent() }
+    )
+
+    class Winner(
+        player: Player
+    ) : GameDialog(
+        content = { WinnerDialogContent(player) }
+    )
+
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
-enum class GameDialog(val content: @Composable (GameViewModel) -> Unit) {
-    DEATH(
-        content = { viewModel ->
-            DeathBottomSheet(viewModel.state.value.selected?.name ?: "") {
-                viewModel.hideDialog()
-                if (it.killPlayer) {
-                    viewModel.update {
-                        this.kill()
-                    }
-                }
+@Composable
+private fun DeathDialogContent(
+    viewModel: GameViewModel = hiltViewModel()
+){
+    DeathBottomSheet(viewModel.state.value.selected?.name ?: "") {
+        viewModel.hideDialog()
+        if (it.killPlayer) {
+            viewModel.update {
+                this.kill()
             }
         }
-    ),
-    DICE(
-        content = {
-            DiceBottomSheet {
-                it.hideDialog()
-            }
-        }
-    ),
-    FIGHT(
-        content = {
-            FightDialog(
-                initialValue = it.state.value.selected?.powerWithLevel
-            ) {
-                it.hideDialog()
-            }
-        }
-    ),
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DiceDialogContent(
+    viewModel: GameViewModel = hiltViewModel()
+){
+    DiceBottomSheet {
+        viewModel.hideDialog()
+    }
+}
+
+@Composable
+private fun FightDialogContent(
+    viewModel: GameViewModel = hiltViewModel()
+){
+    FightDialog(
+        initialValue = viewModel.state.value.selected?.powerWithLevel
+    ) {
+        viewModel.hideDialog()
+    }
+}
+
+@Composable
+private fun WinnerDialogContent(
+    player: Player,
+    viewModel: GameViewModel = hiltViewModel()
+){
+    WinnerDialog(
+        winnerName = player.name
+    ) {
+        viewModel.hideDialog()
+    }
 }
