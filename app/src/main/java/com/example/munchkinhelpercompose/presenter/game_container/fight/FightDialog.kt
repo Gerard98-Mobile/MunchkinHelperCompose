@@ -42,6 +42,7 @@ import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.SpacerH
 import com.example.munchkinhelpercompose.ui.components.SpacerW
+import com.example.munchkinhelpercompose.ui.components.buttons.MHTextButton
 import com.example.munchkinhelpercompose.ui.theme.AppTheme
 
 private val CHANGE_POSSIBILITIES = listOf(1, 2, 3, 4, 5, 10, 20)
@@ -50,7 +51,9 @@ private val CHANGE_POSSIBILITIES = listOf(1, 2, 3, 4, 5, 10, 20)
 @Composable
 private fun FightBottomSheetPreview() {
     AppTheme {
-        FightScreenContent()
+        Column {
+            FightScreenContent()
+        }
     }
 }
 
@@ -78,19 +81,27 @@ fun FightDialog(
                 .background(MaterialTheme.colorScheme.background)
                 .padding(10.dp)
         ) {
-            MHToolbar(
-                titleStringRes = R.string.fight,
-                navigationIcon = MHToolbarNavigationIcon.Close {
-                    onHide()
-                }
-            )
-            FightScreenContent()
+            FightScreenContent(onHide)
         }
     }
 }
 
 @Composable
-private fun FightScreenContent() {
+private fun FightScreenContent(
+    onHide: () -> Unit = { },
+    viewModel: FightViewModel = hiltViewModel(),
+) {
+    MHToolbar(
+        titleStringRes = R.string.fight,
+        navigationIcon = MHToolbarNavigationIcon.Close {
+            onHide()
+        },
+        actions = {
+            MHTextButton(stringRes = R.string.reset) {
+                viewModel.reset()
+            }
+        }
+    )
     SpacerH(dp = 50.dp)
     Row(
         modifier = Modifier
@@ -109,8 +120,6 @@ private fun FightScreenContent() {
         Side(R.string.monsters, Fight.MONSTER_SIDE)
     }
     SpacerH(dp = 10.dp)
-
-
 }
 
 @Composable

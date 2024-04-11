@@ -20,4 +20,5 @@
     <string name="poor_end">Poor End</string>
     <string name="poor_end_description">%s you get baked and eaten.\n You die</string>
     <string name="death_count">Death count: %d</string>
+    <string name="reset">Reset</string>
 </resources>

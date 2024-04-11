@@ -14,15 +14,22 @@ import javax.inject.Inject
 class FightViewModel @Inject constructor() : ViewModel() {
 
     data class State(
+        val initialPower: Int = 0,
         val fight: Fight = Fight()
-    )
+    ) {
+        fun reset() : State = this.copy(fight = Fight(initialPower))
+    }
 
     private val _state = MutableStateFlow(State())
     val state = _state.asStateFlow()
 
     fun init(playerPower: Int) {
         _state.update {
-            it.copy(fight = Fight(playerPower))
+            if (it.initialPower == playerPower) return
+            it.copy(
+                initialPower = playerPower,
+                fight = Fight(playerPower)
+            )
         }
     }
 
@@ -31,6 +38,12 @@ class FightViewModel @Inject constructor() : ViewModel() {
             it.copy(
                 fight = it.fight.update(by, side)
             )
+        }
+    }
+
+    fun reset() {
+        _state.update {
+            it.reset()
         }
     }
 
