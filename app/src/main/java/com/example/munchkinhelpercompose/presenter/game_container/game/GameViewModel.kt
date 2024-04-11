@@ -40,9 +40,6 @@ class GameViewModel @Inject constructor(
     private val _state = MutableStateFlow(State())
     val state = _state.asStateFlow()
 
-    private val _winner = MutableSharedFlow<Player?>()
-    val winner = _winner.asSharedFlow()
-
     private val _killed = MutableSharedFlow<Player?>()
     val killed = _killed.asSharedFlow()
 
