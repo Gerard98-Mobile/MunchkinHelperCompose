@@ -28,14 +28,14 @@ fun AnimatedCounter(
                 slideInVertically { it } togetherWith slideOutVertically { -it }
             }
         },
-        label = "counter",
-        modifier = modifier
+        label = "counter"
     ) {
         Text(
             text = it.toString(),
             style = style,
             color = color,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = modifier
         )
     }
 
