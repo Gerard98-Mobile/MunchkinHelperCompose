@@ -87,7 +87,9 @@ private fun NewGameScreenToolbar(
                 if (state.players.size >= MIN_PLAYERS_COUNT) {
                     viewModel.saveHint()
                     viewModel.createGame()
-                    Views.GAME.navigate(navController)
+                    Views.GAME.navigate(navController){
+                        popUpTo(0)
+                    }
                 } else {
                     scope.launch {
                         snackbarHostState.showSnackbar(playersCountError)

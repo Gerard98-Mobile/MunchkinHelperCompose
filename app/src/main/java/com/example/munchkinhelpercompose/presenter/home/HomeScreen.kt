@@ -50,7 +50,11 @@ private fun HomeContent(
         }
         if (state.previousGame != null) {
             MHButton(R.string.load_game) {
-                Views.GAME.navigate(navController)
+                Views.GAME.navigate(
+                    controller = navController,
+                ) {
+                    popUpTo(0)
+                }
             }
         }
     }

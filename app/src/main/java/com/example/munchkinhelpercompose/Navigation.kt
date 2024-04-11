@@ -8,6 +8,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -40,8 +41,14 @@ enum class Views(
     )
 }
 
-fun NavController.navigate(view: Views) = this.navigate(view.route)
-fun Views.navigate(controller: NavController) = controller.navigate(this.route)
+fun Views.navigate(
+    controller: NavController,
+    builder: NavOptionsBuilder.() -> Unit = { }
+) = controller.navigate(
+    route = this.route,
+) {
+    this.builder()
+}
 
 @Composable
 fun AppNavHost(
