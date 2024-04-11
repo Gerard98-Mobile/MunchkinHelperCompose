@@ -2,6 +2,7 @@ package com.example.munchkinhelpercompose.presenter.game_container.game
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +41,7 @@ fun PlayersHeader() = Column(
 ) {
     Row(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .padding(start = PLAYER_ENTRY_PADDING, end = PLAYER_ENTRY_PADDING),
         verticalAlignment = Alignment.CenterVertically
     ) {
