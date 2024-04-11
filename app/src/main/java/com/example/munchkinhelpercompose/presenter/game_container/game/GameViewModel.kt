@@ -43,6 +43,9 @@ class GameViewModel @Inject constructor(
     private val _winner = MutableSharedFlow<Player?>()
     val winner = _winner.asSharedFlow()
 
+    private val _killed = MutableSharedFlow<Player?>()
+    val killed = _killed.asSharedFlow()
+
     init {
         collectGame()
     }
@@ -79,6 +82,8 @@ class GameViewModel @Inject constructor(
         viewModelScope.launch {
             val result = updatePlayer.invoke(state.selected, change, state.game) ?: return@launch
             val player = result.players.find { it.name ==  state.selected.name } ?: return@launch
+
+            if (player.deaths > state.selected.deaths) _killed.emit(state.selected)
 
             playChangeSound.invoke(state.selected, player)
             _state.value = state.copy(

@@ -1,7 +1,6 @@
 package com.example.munchkinhelpercompose.presenter.game_container.game
 
 import androidx.compose.animation.Animatable
-import androidx.compose.animation.core.ExperimentalTransitionApi
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +29,7 @@ import com.example.munchkinhelpercompose.ui.components.image.ResIcon
 import com.example.munchkinhelpercompose.ui.components.image.ResImage
 import com.example.munchkinhelpercompose.ui.theme.MHColor
 import com.example.munchkinhelpercompose.util.str
+import kotlinx.coroutines.flow.collectLatest
 
 private val PLAYER_ENTRY_PADDING = 10.dp
 
@@ -66,7 +66,6 @@ fun PlayersHeader() = Column(
     }
 }
 
-@OptIn(ExperimentalTransitionApi::class)
 @Composable
 fun Player(
     player: Player,
@@ -83,6 +82,15 @@ fun Player(
         LaunchedEffect(null) {
             color.animateTo(MHColor.crown, animationSpec = tween(500))
             color.animateTo(baseColor, animationSpec = tween(500))
+        }
+    }
+
+    LaunchedEffect(null) {
+        viewModel.killed.collectLatest {
+            if (it?.name == player.name) {
+                color.animateTo(MHColor.default_dark, animationSpec = tween(500))
+                color.animateTo(baseColor, animationSpec = tween(500))
+            }
         }
     }
 
