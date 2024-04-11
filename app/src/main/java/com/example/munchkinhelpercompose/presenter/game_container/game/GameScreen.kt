@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,13 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.defaults.MHCardDefaults
 import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.ui.DiceFive
 import com.example.munchkinhelpercompose.ui.components.AnimatedCounter
 import com.example.munchkinhelpercompose.ui.components.AutoSizeText
+import com.example.munchkinhelpercompose.ui.components.MHToolbar
+import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.PrimaryBorder
 import com.example.munchkinhelpercompose.ui.components.SpacerH
 import com.example.munchkinhelpercompose.ui.components.SpacerW
@@ -42,15 +43,32 @@ import com.example.munchkinhelpercompose.ui.components.TransparentGradientSpacer
 import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 import com.example.munchkinhelpercompose.ui.components.image.ResIcon
 
+
+@Composable
+fun GameScreen() {
+    Scaffold(
+        topBar = {
+            MHToolbar(
+                titleStringRes = R.string.game,
+                navigationIcon = MHToolbarNavigationIcon.None
+            )
+        },
+        content = {
+            Column(Modifier.padding(it)) {
+                GameScreenContent()
+            }
+        }
+    )
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GameScreen(
-    navController: NavController,
+fun GameScreenContent(
     viewModel: GameViewModel = hiltViewModel(),
     state: GameViewModel.State = viewModel.state.collectAsState().value
 ) {
     Box {
-        Column(Modifier.fillMaxSize()) {
+        Column {
             Box(Modifier.weight(1f)) {
                 LazyColumn(
                     modifier = Modifier

@@ -1,13 +1,19 @@
 package com.example.munchkinhelpercompose
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.navigation.*
+import androidx.compose.ui.Modifier
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.munchkinhelpercompose.presenter.game_container.game.GameScreen
 import com.example.munchkinhelpercompose.presenter.home.HomeScreen
 import com.example.munchkinhelpercompose.presenter.new_game.NewGameScreen
-import com.example.munchkinhelpercompose.presenter.game_container.GameMainScreen
 
 enum class Views(
     val route: String,
@@ -29,7 +35,7 @@ enum class Views(
     GAME(
         route = "game",
         content = { _, _ ->
-            GameMainScreen()
+            GameScreen()
         }
     )
 }
@@ -47,7 +53,9 @@ fun AppNavHost(
                 route = view.route,
                 arguments = view.arguments
             ) {
-                view.content(navController, it)
+                Column(Modifier.fillMaxSize()) {
+                    view.content(navController, it)
+                }
             }
         }
     }

@@ -19,7 +19,7 @@ import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
 @Composable
 fun HomeScreen(
     navController: NavController
-) = Column(Modifier.fillMaxSize()) {
+) {
     HomeContent(navController)
 }
 
@@ -34,7 +34,8 @@ private fun HomeContent(
     ColumnCentered(
         Modifier
             .weight(1f)
-            .fillMaxWidth()) {
+            .fillMaxWidth()
+    ) {
         Card {
             Logo()
         }
