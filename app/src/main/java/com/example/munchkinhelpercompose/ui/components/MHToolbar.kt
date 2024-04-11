@@ -7,24 +7,32 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
-import com.example.munchkinhelpercompose.ui.Back
+import com.example.munchkinhelpercompose.ui.CloseIcon
 
-enum class MhToolbarNavigationIcon(
-    val content: @Composable (NavController) -> Unit
+sealed class MHToolbarNavigationIcon(
+    val ui: @Composable () -> Unit,
 ) {
-    NONE({}),
-    BACK({
-        Back { it.popBackStack() }
-    })
+    object None: MHToolbarNavigationIcon({})
+
+    class Back(
+        onClose: () -> Unit
+    ): MHToolbarNavigationIcon(
+        ui = { Back { onClose.invoke() } }
+    )
+
+    class Close(
+        onClose: () -> Unit,
+    ): MHToolbarNavigationIcon(
+        ui = { CloseIcon { onClose.invoke() } }
+    )
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MHToolbar(
-    navController: NavController,
     @StringRes titleStringRes: Int,
-    navigationIcon: MhToolbarNavigationIcon,
+    navigationIcon: MHToolbarNavigationIcon,
     actions: @Composable RowScope.() -> Unit = { }
 ) {
     TopAppBar(
@@ -34,7 +42,7 @@ fun MHToolbar(
             )
         },
         navigationIcon = {
-            navigationIcon.content(navController)
+            navigationIcon.ui.invoke()
         },
         actions = actions
     )

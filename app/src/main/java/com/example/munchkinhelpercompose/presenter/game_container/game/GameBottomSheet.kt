@@ -4,7 +4,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import com.example.munchkinhelpercompose.presenter.game_container.death.DeathBottomSheet
 import com.example.munchkinhelpercompose.presenter.game_container.dice.DiceBottomSheet
-import com.example.munchkinhelpercompose.presenter.game_container.fight.FightBottomSheet
+import com.example.munchkinhelpercompose.presenter.game_container.fight.FightDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 enum class GameBottomSheet(val content: @Composable (GameViewModel) -> Unit) {
@@ -29,7 +29,9 @@ enum class GameBottomSheet(val content: @Composable (GameViewModel) -> Unit) {
     ),
     FIGHT(
         content = {
-            FightBottomSheet(initialValue = it.state.value.selected?.powerWithLevel) {
+            FightDialog(
+                initialValue = it.state.value.selected?.powerWithLevel
+            ) {
                 it.hideBottomSheet()
             }
         }

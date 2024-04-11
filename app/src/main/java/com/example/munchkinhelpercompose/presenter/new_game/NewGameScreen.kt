@@ -37,7 +37,7 @@ import com.example.munchkinhelpercompose.Views
 import com.example.munchkinhelpercompose.navigate
 import com.example.munchkinhelpercompose.ui.Plus
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
-import com.example.munchkinhelpercompose.ui.components.MhToolbarNavigationIcon
+import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.buttons.MHTextButton
 import com.example.munchkinhelpercompose.util.ifNotEmpty
 import kotlinx.coroutines.CoroutineScope
@@ -78,9 +78,10 @@ private fun NewGameScreenToolbar(
     val playersCountError = stringResource(id = R.string.not_enough_players_error)
     
     MHToolbar(
-        navController = navController,
         titleStringRes = R.string.new_game,
-        navigationIcon = MhToolbarNavigationIcon.BACK,
+        navigationIcon = MHToolbarNavigationIcon.Back {
+            navController.popBackStack()
+        },
         actions = {
             MHTextButton(R.string.start) {
                 if (state.players.size >= MIN_PLAYERS_COUNT) {

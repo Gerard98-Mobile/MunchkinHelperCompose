@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -17,13 +18,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -34,11 +31,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.model.Fight
 import com.example.munchkinhelpercompose.model.FightSide
 import com.example.munchkinhelpercompose.ui.components.ColumnCentered
+import com.example.munchkinhelpercompose.ui.components.MHToolbar
+import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.SpacerH
 import com.example.munchkinhelpercompose.ui.components.SpacerW
 import com.example.munchkinhelpercompose.ui.theme.AppTheme
@@ -53,11 +54,9 @@ private fun FightBottomSheetPreview() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FightBottomSheet(
+fun FightDialog(
     initialValue: Int? = 0,
-    fightSheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     viewModel: FightViewModel = hiltViewModel(),
     onHide: () -> Unit,
 ) {
@@ -65,15 +64,26 @@ fun FightBottomSheet(
         viewModel.init(initialValue ?: 0)
     }
 
-    ModalBottomSheet(
+    Dialog(
         onDismissRequest = { onHide() },
-        sheetState = fightSheetState,
+        DialogProperties(
+            dismissOnBackPress = true,
+            dismissOnClickOutside = false,
+            usePlatformDefaultWidth = false
+        )
     ) {
         Column(
             Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
                 .padding(10.dp)
         ) {
+            MHToolbar(
+                titleStringRes = R.string.fight,
+                navigationIcon = MHToolbarNavigationIcon.Close {
+                    onHide()
+                }
+            )
             FightScreenContent()
         }
     }

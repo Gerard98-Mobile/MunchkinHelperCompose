@@ -28,8 +28,8 @@ enum class Views(
     ),
     GAME(
         route = "game",
-        content = { controller, _ ->
-            GameMainScreen(controller)
+        content = { _, _ ->
+            GameMainScreen()
         }
     )
 }

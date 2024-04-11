@@ -5,7 +5,7 @@ import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 
 @Composable
-fun Close(onClick: () -> Unit) = ClickableResIcon(id = R.drawable.ic_close, onClick = onClick)
+fun CloseIcon(onClick: () -> Unit) = ClickableResIcon(id = R.drawable.ic_close, onClick = onClick)
 
 @Composable
 fun Back(onClick: () -> Unit) = ClickableResIcon(id = R.drawable.ic_back, onClick = onClick)
