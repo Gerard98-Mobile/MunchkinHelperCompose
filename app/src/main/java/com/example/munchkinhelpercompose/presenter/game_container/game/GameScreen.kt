@@ -33,7 +33,7 @@ import com.example.munchkinhelpercompose.defaults.MHCardDefaults
 import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.ui.DiceFive
 import com.example.munchkinhelpercompose.ui.components.AnimatedCounter
-import com.example.munchkinhelpercompose.ui.components.AutoSizeText
+import com.example.munchkinhelpercompose.ui.components.text.AutoSizeText
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.PrimaryBorder

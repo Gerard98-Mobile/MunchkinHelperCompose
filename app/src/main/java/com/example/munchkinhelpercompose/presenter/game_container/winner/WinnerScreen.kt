@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
@@ -27,27 +26,13 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.ui.components.ColumnCentered
 import com.example.munchkinhelpercompose.ui.components.SpacerH
+import com.example.munchkinhelpercompose.ui.components.text.ShimmerText
 import com.example.munchkinhelpercompose.util.str
 import nl.dionsegijn.konfetti.compose.KonfettiView
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import java.util.concurrent.TimeUnit
-
-@Composable
-fun WinnerScreen(
-    navController: NavController,
-) = Box {
-
-    val party = Party(
-        emitter = Emitter(duration = 10, TimeUnit.SECONDS).perSecond(100)
-    )
-
-    KonfettiView(
-        modifier = Modifier.fillMaxSize(),
-        parties = listOf(party),
-    )
-}
 
 @Preview
 @Composable
@@ -107,9 +92,14 @@ private fun WinnerDialogContent(
                     textAlign = TextAlign.Center
                 )
 
+                ShimmerText(
+                    text = winnerName,
+                    style = MaterialTheme.typography.displayMedium
+                )
+
                 Text(
                     text = R.string.you_win.str(winnerName),
-                    style = MaterialTheme.typography.displayMedium
+                    style = MaterialTheme.typography.headlineLarge
                 )
             }
         }
@@ -121,9 +111,6 @@ private fun WinnerDialogContent(
             color = MaterialTheme.colorScheme.onPrimary
         )
     }
-
-
-
 
     val party = Party(
         emitter = Emitter(duration = 10, TimeUnit.SECONDS).perSecond(100),

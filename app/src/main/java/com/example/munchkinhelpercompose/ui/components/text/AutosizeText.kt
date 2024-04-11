@@ -1,4 +1,4 @@
-package com.example.munchkinhelpercompose.ui.components
+package com.example.munchkinhelpercompose.ui.components.text
 
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
