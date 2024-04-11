@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import com.example.munchkinhelpercompose.navigation.AppNavHost
 import com.example.munchkinhelpercompose.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 

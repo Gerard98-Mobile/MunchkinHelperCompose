@@ -33,8 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.Views
-import com.example.munchkinhelpercompose.navigate
+import com.example.munchkinhelpercompose.navigation.AppScreen
 import com.example.munchkinhelpercompose.ui.MHIcon
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
@@ -87,9 +86,7 @@ private fun NewGameScreenToolbar(
                 if (state.players.size >= MIN_PLAYERS_COUNT) {
                     viewModel.saveHint()
                     viewModel.createGame()
-                    Views.GAME.navigate(navController){
-                        popUpTo(0)
-                    }
+                    AppScreen.Game.navigate(navController)
                 } else {
                     scope.launch {
                         snackbarHostState.showSnackbar(playersCountError)

@@ -10,8 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.Views
-import com.example.munchkinhelpercompose.navigate
+import com.example.munchkinhelpercompose.navigation.AppScreen
 import com.example.munchkinhelpercompose.ui.Logo
 import com.example.munchkinhelpercompose.ui.components.ColumnCentered
 import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
@@ -46,15 +45,11 @@ private fun HomeContent(
             .fillMaxWidth()
     ) {
         MHButton(R.string.new_game) {
-            Views.NEW_GAME.navigate(navController)
+            AppScreen.NewGame.navigate(navController)
         }
         if (state.previousGame != null) {
             MHButton(R.string.load_game) {
-                Views.GAME.navigate(
-                    controller = navController,
-                ) {
-                    popUpTo(0)
-                }
+                AppScreen.Game.navigate(navController)
             }
         }
     }
