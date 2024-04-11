@@ -27,7 +27,7 @@ class GameViewModel @Inject constructor(
     data class State(
         val game: Game? = null,
         val selected: Player? = null,
-        val visibleBottomSheet: GameBottomSheet? = null
+        val visibleDialog: GameDialog? = null
     ) {
         private val allLeaders = game?.players?.let { players ->
             val max = players.maxOf { it.level }
@@ -66,12 +66,12 @@ class GameViewModel @Inject constructor(
         _state.value = action(state.value)
     }
 
-    fun showBottomSheet(sheet: GameBottomSheet) = updateState {
-        this.copy(visibleBottomSheet = sheet)
+    fun showDialog(sheet: GameDialog) = updateState {
+        this.copy(visibleDialog = sheet)
     }
 
-    fun hideBottomSheet() = updateState {
-        this.copy(visibleBottomSheet = null)
+    fun hideDialog() = updateState {
+        this.copy(visibleDialog = null)
     }
 
     fun update(

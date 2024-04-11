@@ -85,7 +85,7 @@ fun GameScreen(
                         .padding(10.dp),
                     colors = MHCardDefaults.transparentCardColors(),
                     onClick = {
-                        viewModel.showBottomSheet(GameBottomSheet.DICE)
+                        viewModel.showDialog(GameDialog.DICE)
                     }
                 ) {
                     DiceFive(Modifier.size(48.dp))
@@ -103,7 +103,7 @@ fun GameScreen(
             }
         }
 
-        state.visibleBottomSheet?.let {
+        state.visibleDialog?.let {
             it.content(viewModel)
         }
     }
@@ -123,7 +123,7 @@ private fun SelectedPlayerBox(
         verticalAlignment = Alignment.CenterVertically
     ) {
         ClickableResIcon(id = R.drawable.ic_swords) {
-            viewModel.showBottomSheet(GameBottomSheet.FIGHT)
+            viewModel.showDialog(GameDialog.FIGHT)
         }
 
         AutoSizeText(
@@ -134,7 +134,7 @@ private fun SelectedPlayerBox(
         )
 
         ClickableResIcon(id = R.drawable.ic_grim_reaper) {
-            viewModel.showBottomSheet(GameBottomSheet.DEATH)
+            viewModel.showDialog(GameDialog.DEATH)
         }
 
     }

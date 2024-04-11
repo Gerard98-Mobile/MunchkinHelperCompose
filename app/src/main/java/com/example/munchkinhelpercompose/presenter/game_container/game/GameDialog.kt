@@ -7,11 +7,11 @@ import com.example.munchkinhelpercompose.presenter.game_container.dice.DiceBotto
 import com.example.munchkinhelpercompose.presenter.game_container.fight.FightDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
-enum class GameBottomSheet(val content: @Composable (GameViewModel) -> Unit) {
+enum class GameDialog(val content: @Composable (GameViewModel) -> Unit) {
     DEATH(
         content = { viewModel ->
             DeathBottomSheet(viewModel.state.value.selected?.name ?: "") {
-                viewModel.hideBottomSheet()
+                viewModel.hideDialog()
                 if (it.killPlayer) {
                     viewModel.update {
                         this.kill()
@@ -23,7 +23,7 @@ enum class GameBottomSheet(val content: @Composable (GameViewModel) -> Unit) {
     DICE(
         content = {
             DiceBottomSheet {
-                it.hideBottomSheet()
+                it.hideDialog()
             }
         }
     ),
@@ -32,7 +32,7 @@ enum class GameBottomSheet(val content: @Composable (GameViewModel) -> Unit) {
             FightDialog(
                 initialValue = it.state.value.selected?.powerWithLevel
             ) {
-                it.hideBottomSheet()
+                it.hideDialog()
             }
         }
     ),
