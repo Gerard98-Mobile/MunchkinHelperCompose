@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -37,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.model.Fight
 import com.example.munchkinhelpercompose.model.FightSide
+import com.example.munchkinhelpercompose.ui.components.AnimatedCounter
 import com.example.munchkinhelpercompose.ui.components.ColumnCentered
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
@@ -155,15 +157,15 @@ private fun ValueBox(@StringRes titleRes: Int, value: Int, fightResult: Fight.Re
             containerColor = animatedColor
         )
     ) {
-        Text(
+        AnimatedCounter(
+            value = value,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, bottom = 10.dp),
-            text = value.toString(),
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.Bold
             ),
-            textAlign = TextAlign.Center,
+            color = LocalContentColor.current
         )
     }
 }
