@@ -35,7 +35,7 @@ import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.Views
 import com.example.munchkinhelpercompose.navigate
-import com.example.munchkinhelpercompose.ui.Plus
+import com.example.munchkinhelpercompose.ui.MHIcon
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.buttons.MHTextButton
@@ -188,7 +188,7 @@ private fun NewPlayerTextField(
             autoCorrect = false
         ),
         trailingIcon = {
-            Plus {
+            MHIcon.Plus {
                 viewModel.addPlayer(playerName)
                 playerName = ""
             }
