@@ -22,7 +22,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +41,6 @@ import com.example.munchkinhelpercompose.ui.components.SpacerW
 import com.example.munchkinhelpercompose.ui.components.TransparentGradientSpacerH
 import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 import com.example.munchkinhelpercompose.ui.components.image.ResIcon
-import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -51,12 +49,6 @@ fun GameScreen(
     viewModel: GameViewModel = hiltViewModel(),
     state: GameViewModel.State = viewModel.state.collectAsState().value
 ) {
-    LaunchedEffect(null) {
-        viewModel.winner.collectLatest {
-//            navController.navigate("winner")
-        }
-    }
-
     Box {
         Column(Modifier.fillMaxSize()) {
             Box(Modifier.weight(1f)) {

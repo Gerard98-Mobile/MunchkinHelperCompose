@@ -89,11 +89,9 @@ class GameViewModel @Inject constructor(
             _state.value = state.copy(
                 game = result,
                 selected = player,
+//                TODO uncomment after refactoring GameDialogs to be able to handle parameters
+//                visibleDialog = if (player.level == 10) GameDialog.WINNER else null
             )
-
-            if (player.level == 10) {
-                _winner.emit(player)
-            }
         }
     }
 }
