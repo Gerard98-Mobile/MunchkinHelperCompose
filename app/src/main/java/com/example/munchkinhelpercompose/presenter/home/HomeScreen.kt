@@ -1,5 +1,6 @@
 package com.example.munchkinhelpercompose.presenter.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,7 +48,7 @@ private fun HomeContent(
         MHButton(R.string.new_game) {
             AppScreen.NewGame.navigate(navController)
         }
-        if (state.previousGame != null) {
+        AnimatedVisibility(visible = state.previousGame != null) {
             MHButton(R.string.load_game) {
                 AppScreen.Game.navigate(navController)
             }
