@@ -85,6 +85,10 @@ fun Player(
             color.animateTo(MHColor.crown, animationSpec = tween(500))
             color.animateTo(baseColor, animationSpec = tween(500))
         }
+    } else if (color.value != baseColor) {
+        LaunchedEffect(null) {
+            color.animateTo(baseColor)
+        }
     }
 
     LaunchedEffect(null) {
