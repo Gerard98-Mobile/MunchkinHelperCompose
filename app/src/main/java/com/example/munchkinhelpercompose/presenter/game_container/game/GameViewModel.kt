@@ -48,10 +48,11 @@ class GameViewModel @Inject constructor(
     }
 
     private fun collectGame() = viewModelScope.launch {
-        getGame.invoke().first().let { game ->
+        getGame.invoke().first { game ->
             _state.update {
                 it.copy(game = game)
             }
+            game != null
         }
     }
 
