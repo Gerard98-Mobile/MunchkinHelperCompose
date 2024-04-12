@@ -3,6 +3,8 @@ package com.example.munchkinhelpercompose.presenter.new_game
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -38,6 +41,7 @@ import com.example.munchkinhelpercompose.ui.MHIcon
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.buttons.MHTextButton
+import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 import com.example.munchkinhelpercompose.util.ifNotEmpty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -227,17 +231,29 @@ fun PlayerPreview() {
 }
 
 @Composable
-private fun Player(name: String, modifier: Modifier = Modifier) {
+private fun Player(
+    name: String,
+    modifier: Modifier = Modifier,
+    viewModel : NewGameViewModel = hiltViewModel()
+) {
     Card(
         modifier
             .padding(5.dp)
             .fillMaxWidth()
     ) {
-        Text(
-            text = name,
-            modifier = Modifier.padding(10.dp),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = name,
+                modifier = Modifier.padding(10.dp),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            ClickableResIcon(id = R.drawable.ic_minus) {
+                viewModel.removePlayer(name)
+            }
+        }
     }
 }

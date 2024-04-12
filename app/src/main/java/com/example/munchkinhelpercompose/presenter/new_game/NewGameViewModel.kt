@@ -52,6 +52,14 @@ class NewGameViewModel @Inject constructor(
         }
     }
 
+    fun removePlayer(name: String) = _state.update {
+        it.copy(
+            players = it.players.toMutableList().apply {
+                remove(name)
+            }
+        )
+    }
+
     private fun collectHints() = viewModelScope.launch(dispatcher) {
         getHints.invoke().collectLatest { data ->
             _state.update {
