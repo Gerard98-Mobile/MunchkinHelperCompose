@@ -18,7 +18,7 @@
     <string name="not_enough_players_error">Game need to have at least 2 players</string>
     <string name="kill_player">Kill</string>
     <string name="poor_end">Poor End</string>
-    <string name="poor_end_description">%s you get baked and eaten.\n You die</string>
+    <string name="poor_end_description">You get baked and eaten.\n You die</string>
     <string name="death_count">Death count: %d</string>
     <string name="reset">Reset</string>
     <string name="congratulations">Congratulations!</string>

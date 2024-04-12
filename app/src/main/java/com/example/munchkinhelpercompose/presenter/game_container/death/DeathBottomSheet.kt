@@ -1,7 +1,7 @@
 package com.example.munchkinhelpercompose.presenter.game_container.death
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,7 +30,7 @@ data class DeathResult(
 @Composable
 fun DeathBottomSheet(
     playerName: String,
-    sheetState: SheetState = rememberModalBottomSheetState(),
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     onHide: (DeathResult) -> Unit,
 ) = ModalBottomSheet(
     onDismissRequest = { onHide(DeathResult()) },
@@ -38,7 +38,7 @@ fun DeathBottomSheet(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -58,18 +58,20 @@ private fun Content(
     )
     SpacerH(dp = 30.dp)
     Text(
-        text = R.string.poor_end.str(),
-        style = MaterialTheme.typography.headlineMedium,
-        color = MHColor.negative
+        text = playerName,
+        style = MaterialTheme.typography.headlineLarge,
+        color = MHColor.negative,
+        textAlign = TextAlign.Center
     )
     SpacerH(dp = 10.dp)
     Text(
-        text = R.string.poor_end_description.str(playerName),
-        style = MaterialTheme.typography.headlineSmall,
+        text = R.string.poor_end_description.str(),
+        style = MaterialTheme.typography.titleLarge,
         textAlign = TextAlign.Center
     )
     SpacerH(dp = 10.dp)
     MHButton(stringRes = R.string.kill_player) {
         onHide(DeathResult(killPlayer = true))
     }
+    SpacerH(dp = 40.dp)
 }
