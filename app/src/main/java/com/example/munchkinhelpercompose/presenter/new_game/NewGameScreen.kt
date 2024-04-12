@@ -84,7 +84,6 @@ private fun NewGameScreenToolbar(
         actions = {
             MHTextButton(R.string.start) {
                 if (state.players.size >= MIN_PLAYERS_COUNT) {
-                    viewModel.saveHint()
                     viewModel.createGame()
                     AppScreen.Game.navigate(navController)
                 } else {

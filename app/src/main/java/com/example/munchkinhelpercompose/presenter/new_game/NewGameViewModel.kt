@@ -64,12 +64,9 @@ class NewGameViewModel @Inject constructor(
         it.copy(error = error)
     }
 
-    fun saveHint() = viewModelScope.launch(dispatcher) {
-        saveHints.invoke(state.value.players.toList())
-    }
-
     fun createGame() = viewModelScope.launch(dispatcher) {
         createGame.invoke(state.value.players)
+        saveHints.invoke(state.value.players.toList())
     }
 
 }
