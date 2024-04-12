@@ -3,6 +3,7 @@ package com.example.munchkinhelpercompose.presenter.new_game
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,6 +41,7 @@ import com.example.munchkinhelpercompose.navigation.AppScreen
 import com.example.munchkinhelpercompose.ui.MHIcon
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
+import com.example.munchkinhelpercompose.ui.components.TransparentGradientSpacerH
 import com.example.munchkinhelpercompose.ui.components.buttons.MHTextButton
 import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 import com.example.munchkinhelpercompose.util.ifNotEmpty
@@ -114,8 +116,15 @@ private fun NewGameScreenContent(
 
     NewGameHintBox()
 
-    LazyColumn {
-        this.items(
+    LazyColumn(
+        modifier = Modifier.weight(1f),
+        contentPadding = PaddingValues(bottom = 40.dp)
+    ) {
+        stickyHeader {
+            TransparentGradientSpacerH(dp = 5.dp)
+        }
+
+        items(
             items = state.players,
             key = { name -> name }
         ) { name ->
