@@ -1,5 +1,6 @@
 package com.example.munchkinhelpercompose.presenter.new_game
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munchkinhelpercompose.use_case.game.CreateGameUseCase
@@ -9,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -61,7 +62,7 @@ class NewGameViewModel @Inject constructor(
     }
 
     private fun collectHints() = viewModelScope.launch(dispatcher) {
-        getHints.invoke().collectLatest { data ->
+        getHints.invoke().first().let { data ->
             _state.update {
                 it.copy(hints = data)
             }
