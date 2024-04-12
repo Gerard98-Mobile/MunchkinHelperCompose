@@ -11,7 +11,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -19,14 +18,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.ui.components.ColumnCentered
 import com.example.munchkinhelpercompose.ui.components.SpacerH
-import com.example.munchkinhelpercompose.ui.components.text.ShimmerText
+import com.example.munchkinhelpercompose.ui.components.animation.RawResLottieAnimation
 import com.example.munchkinhelpercompose.util.str
 import nl.dionsegijn.konfetti.compose.KonfettiView
 import nl.dionsegijn.konfetti.core.Party
@@ -81,8 +76,9 @@ private fun WinnerDialogContent(
             ColumnCentered(
                 Modifier.padding(10.dp)
             ) {
-                AnimatedPreloader(
-                    Modifier.size(300.dp)
+                RawResLottieAnimation(
+                    animationRes = R.raw.winner_animation,
+                    modifier = Modifier.size(300.dp)
                 )
 
                 Text(
@@ -91,12 +87,11 @@ private fun WinnerDialogContent(
                     style = MaterialTheme.typography.headlineLarge,
                     textAlign = TextAlign.Center
                 )
-
-                ShimmerText(
+                Text(
                     text = winnerName,
-                    style = MaterialTheme.typography.displayMedium
+                    style = MaterialTheme.typography.displayMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
-
                 Text(
                     text = R.string.you_win.str(winnerName),
                     style = MaterialTheme.typography.headlineLarge
@@ -112,6 +107,7 @@ private fun WinnerDialogContent(
         )
     }
 
+
     val party = Party(
         emitter = Emitter(duration = 10, TimeUnit.SECONDS).perSecond(100),
         spread = 90
@@ -119,40 +115,22 @@ private fun WinnerDialogContent(
 
     KonfettiView(
         modifier = Modifier.fillMaxSize(),
-        parties = listOf(party.copy(
-            position = Position.Relative(0.0,0.0),
-            angle = 45
-        )),
+        parties = listOf(
+            party.copy(
+                position = Position.Relative(0.0, 0.0),
+                angle = 45
+            )
+        ),
     )
 
     KonfettiView(
         modifier = Modifier.fillMaxSize(),
-        parties = listOf(party.copy(
-            position = Position.Relative(1.0,0.0),
-            angle = 135
-        )),
+        parties = listOf(
+            party.copy(
+                position = Position.Relative(1.0, 0.0),
+                angle = 135
+            )
+        ),
     )
 
-}
-
-@Composable
-fun AnimatedPreloader(modifier: Modifier = Modifier) {
-    val preloaderLottieComposition by rememberLottieComposition(
-        LottieCompositionSpec.RawRes(
-            R.raw.winner_animation
-        )
-    )
-
-    val preloaderProgress by animateLottieCompositionAsState(
-        preloaderLottieComposition,
-        iterations = 1,
-        isPlaying = true
-    )
-
-
-    LottieAnimation(
-        composition = preloaderLottieComposition,
-        progress = { preloaderProgress },
-        modifier = modifier
-    )
 }
