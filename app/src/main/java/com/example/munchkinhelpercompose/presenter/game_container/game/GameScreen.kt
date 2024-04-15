@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.defaults.MHCardDefaults
+import com.example.munchkinhelpercompose.ui.defaults.MHCardDefaults
 import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.ui.DiceFive
 import com.example.munchkinhelpercompose.ui.components.AnimatedCounter

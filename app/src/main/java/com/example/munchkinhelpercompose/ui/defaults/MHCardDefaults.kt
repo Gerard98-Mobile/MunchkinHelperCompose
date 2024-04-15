@@ -1,4 +1,4 @@
-package com.example.munchkinhelpercompose.defaults
+package com.example.munchkinhelpercompose.ui.defaults
 
 import androidx.compose.material3.CardColors
 import androidx.compose.runtime.Composable
