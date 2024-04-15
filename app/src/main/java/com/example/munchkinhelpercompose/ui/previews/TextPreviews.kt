@@ -1,4 +1,4 @@
-package com.example.munchkinhelpercompose.previews
+package com.example.munchkinhelpercompose.ui.previews
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
