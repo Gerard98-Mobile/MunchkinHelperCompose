@@ -1,4 +1,4 @@
-package com.example.munchkinhelpercompose.ui.components.settings.bool
+package com.example.munchkinhelpercompose.presenter.settings.components.bool
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

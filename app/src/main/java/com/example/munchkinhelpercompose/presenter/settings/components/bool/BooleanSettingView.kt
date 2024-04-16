@@ -1,4 +1,4 @@
-package com.example.munchkinhelpercompose.ui.components.settings.bool
+package com.example.munchkinhelpercompose.presenter.settings.components.bool
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.ui.components.settings.SettingBottomSheet
+import com.example.munchkinhelpercompose.presenter.settings.components.SettingBottomSheet
 import com.example.munchkinhelpercompose.util.str
 
 @Preview

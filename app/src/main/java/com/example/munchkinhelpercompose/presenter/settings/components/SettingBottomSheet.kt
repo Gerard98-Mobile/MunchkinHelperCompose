@@ -1,4 +1,4 @@
-package com.example.munchkinhelpercompose.ui.components.settings
+package com.example.munchkinhelpercompose.presenter.settings.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column

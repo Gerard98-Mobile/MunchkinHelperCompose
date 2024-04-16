@@ -1,10 +1,10 @@
-package com.example.munchkinhelpercompose.ui.components.settings.bool
+package com.example.munchkinhelpercompose.presenter.settings.components.bool
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.ui.components.settings.SettingValue
-import com.example.munchkinhelpercompose.ui.components.settings.UiSetting
+import com.example.munchkinhelpercompose.presenter.settings.components.SettingValue
+import com.example.munchkinhelpercompose.presenter.settings.components.UiSetting
 
 class BooleanSetting(
     @StringRes val title: Int,

@@ -3,7 +3,7 @@ package com.example.munchkinhelpercompose.presenter.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munchkinhelpercompose.model.Settings
-import com.example.munchkinhelpercompose.ui.components.settings.UiSetting
+import com.example.munchkinhelpercompose.presenter.settings.components.UiSetting
 import com.example.munchkinhelpercompose.use_case.settings.GetSettingsUseCase
 import com.example.munchkinhelpercompose.use_case.settings.UpdateSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

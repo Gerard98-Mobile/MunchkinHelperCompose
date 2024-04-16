@@ -15,7 +15,7 @@ import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
-import com.example.munchkinhelpercompose.ui.components.settings.bool.BooleanSetting
+import com.example.munchkinhelpercompose.presenter.settings.components.bool.BooleanSetting
 
 @Composable
 fun SettingsView(
