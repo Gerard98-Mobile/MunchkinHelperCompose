@@ -5,6 +5,7 @@ import androidx.navigation.NavOptionsBuilder
 import com.example.munchkinhelpercompose.presenter.game_container.game.GameScreen
 import com.example.munchkinhelpercompose.presenter.home.HomeScreen
 import com.example.munchkinhelpercompose.presenter.new_game.NewGameScreen
+import com.example.munchkinhelpercompose.presenter.settings.SettingsView
 
 object AppScreen {
     object Home : NavigationView(
@@ -23,8 +24,8 @@ object AppScreen {
 
     object Game : NavigationView(
         route = "game",
-        content = { _, _ ->
-            GameScreen()
+        content = { controller, _ ->
+            GameScreen(controller)
         }
     ) {
         override fun navigate(controller: NavController, builder: NavOptionsBuilder.() -> Unit) {
@@ -33,4 +34,11 @@ object AppScreen {
             }
         }
     }
+
+    object Settings : NavigationView(
+        route = "settings",
+        content = { controller, _ ->
+            SettingsView(controller)
+        }
+    )
 }
