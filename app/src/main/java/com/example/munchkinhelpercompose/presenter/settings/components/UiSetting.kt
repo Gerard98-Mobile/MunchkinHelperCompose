@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 abstract class UiSetting <T> {
 
     abstract val onResult: (T) -> Unit
+    abstract val onDismissRequest: () -> Unit
 
     @Composable
     abstract fun rowUi(onClick: () -> Unit)

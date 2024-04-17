@@ -9,7 +9,8 @@ import com.example.munchkinhelpercompose.presenter.settings.components.UiSetting
 class BooleanSetting(
     @StringRes val title: Int,
     override val value: Boolean,
-    override val onResult: (Boolean?) -> Unit
+    override val onDismissRequest: () -> Unit,
+    override val onResult: (Boolean) -> Unit
 ) : UiSetting<Boolean>() {
     @Composable
     override fun rowUi(
@@ -23,7 +24,8 @@ class BooleanSetting(
     @Composable
     override fun selectUi() {
         BooleanSettingView(
-            this
+            this,
+            onDismissRequest = onDismissRequest
         ) {
             onResult(it)
         }

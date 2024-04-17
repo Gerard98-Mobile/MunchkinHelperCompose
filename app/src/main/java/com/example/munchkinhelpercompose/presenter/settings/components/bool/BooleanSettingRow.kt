@@ -20,7 +20,8 @@ fun BooleanSettingRowPreview() {
     BooleanSettingRowView(
         BooleanSetting(
             title = R.string.settings,
-            value = true
+            value = true,
+            onDismissRequest = { }
         ) { }
     ) {
 

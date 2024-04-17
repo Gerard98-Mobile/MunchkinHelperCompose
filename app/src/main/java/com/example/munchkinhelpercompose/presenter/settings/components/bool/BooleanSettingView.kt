@@ -22,19 +22,20 @@ fun BooleanSettingPreview() {
         BooleanSetting(
             title = R.string.settings,
             value = true,
-            onResult = { }
-        )
+            onDismissRequest = { }
+        ) { }
     ) { }
 }
 
 @Composable
 fun BooleanSettingView(
     setting: BooleanSetting,
-    onResult: (Boolean?) -> Unit
+    onDismissRequest: () -> Unit = { },
+    onResult: (Boolean) -> Unit
 ) {
     SettingBottomSheet(
         title = setting.title,
-        onDismissRequest = { onResult(null) }
+        onDismissRequest = { onDismissRequest() }
     ) { hideBottomSheet ->
         BooleanSettingViewContent(setting) {
             hideBottomSheet.invoke()

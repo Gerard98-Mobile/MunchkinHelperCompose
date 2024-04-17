@@ -29,11 +29,14 @@ fun SettingBottomSheet(
 
     val coroutineScope = rememberCoroutineScope()
     val hideBottomSheet: () -> Unit = {
-        coroutineScope.launch { sheetState.hide() }
+        coroutineScope.launch {
+            sheetState.hide()
+            onDismissRequest()
+        }
     }
 
     ModalBottomSheet(
-        onDismissRequest = { onDismissRequest()},
+        onDismissRequest = { hideBottomSheet() },
         sheetState = sheetState
     ) {
         Text(
