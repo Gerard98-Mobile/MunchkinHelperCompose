@@ -1,6 +1,7 @@
-package com.example.munchkinhelpercompose.presenter.settings.components.bool
+package com.example.munchkinhelpercompose.presenter.settings.components.default_ui_setting
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,43 +12,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.presenter.settings.components.SettingBottomSheet
+import com.example.munchkinhelpercompose.presenter.settings.components.UiSetting
 import com.example.munchkinhelpercompose.util.str
 
-@Preview
 @Composable
-fun BooleanSettingPreview() {
-    BooleanSettingView(
-        BooleanSetting(
-            title = R.string.settings,
-            value = true,
-            onDismissRequest = { }
-        ) { }
-    ) { }
-}
-
-@Composable
-fun BooleanSettingView(
-    setting: BooleanSetting,
-    onDismissRequest: () -> Unit = { },
-    onResult: (Boolean) -> Unit
-) {
+fun <T> DefaultUiSettingBottomSheet(
+    setting: UiSetting<T>,
+) = Column {
     SettingBottomSheet(
         title = setting.title,
-        onDismissRequest = { onDismissRequest() }
+        onDismissRequest = { setting.onDismissRequest.invoke() }
     ) { hideBottomSheet ->
-        BooleanSettingViewContent(setting) {
+        DefaultUiSettingViewContent(setting) {
             hideBottomSheet.invoke()
-            onResult(it)
+            setting.onResult.invoke(it)
         }
     }
 }
 
 @Composable
-private fun BooleanSettingViewContent(
-    setting: BooleanSetting,
-    onSelect: (Boolean) -> Unit
+private fun <T> DefaultUiSettingViewContent(
+    setting: UiSetting<T>,
+    onSelect: (T) -> Unit
 ) = LazyColumn {
     items(setting.possibleValues) { item ->
         Row(
@@ -61,4 +48,10 @@ private fun BooleanSettingViewContent(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun DefaultUiSettingViewContentPreview() {
+    DefaultUiSettingViewContent(DefaultUiSetting.getPreviewObject()) { }
 }

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 
 abstract class UiSetting <T> {
 
+    @get:StringRes abstract val title: Int?
     abstract val onResult: (T) -> Unit
     abstract val onDismissRequest: () -> Unit
 

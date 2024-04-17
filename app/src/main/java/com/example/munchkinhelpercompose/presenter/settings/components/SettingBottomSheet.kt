@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingBottomSheet(
-    @StringRes title: Int,
+    @StringRes title: Int?,
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.(() -> Unit) -> Unit
 ) {
@@ -39,11 +39,13 @@ fun SettingBottomSheet(
         onDismissRequest = { hideBottomSheet() },
         sheetState = sheetState
     ) {
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = title.str(),
-            textAlign = TextAlign.Center
-        )
+        title?.let {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = title.str(),
+                textAlign = TextAlign.Center
+            )
+        }
         SpacerH(dp = 20.dp)
         Column {
             content(hideBottomSheet)

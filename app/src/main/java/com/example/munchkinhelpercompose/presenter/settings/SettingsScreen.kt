@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
+import com.example.munchkinhelpercompose.presenter.settings.components.BooleanSetting
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
-import com.example.munchkinhelpercompose.presenter.settings.components.bool.BooleanSetting
 
 @Composable
 fun SettingsView(
@@ -45,7 +45,7 @@ private fun ColumnScope.SettingsContent(
     val state = viewModel.state.collectAsState().value
 
     val data = listOf(
-        BooleanSetting(
+        BooleanSetting.create(
             title = R.string.sound,
             value = state.settings.sound,
             onDismissRequest = { viewModel.editSetting(null) }
@@ -56,12 +56,11 @@ private fun ColumnScope.SettingsContent(
                 )
             }
         },
-        BooleanSetting(
+        BooleanSetting.create(
             title = R.string.death_counter_visibility,
             value = state.settings.isDeathCounterVisible,
             onDismissRequest = { viewModel.editSetting(null) }
         ) { result ->
-
             viewModel.updateSettings {
                 it.copy(
                     isDeathCounterVisible = result
