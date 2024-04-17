@@ -22,7 +22,7 @@ fun <T> DefaultUiSettingBottomSheet(
 ) = Column {
     SettingBottomSheet(
         title = setting.title,
-        onDismissRequest = { setting.onDismissRequest.invoke() }
+        onDismissRequest = { setting.onDismiss.invoke() }
     ) { hideBottomSheet ->
         DefaultUiSettingViewContent(setting) {
             hideBottomSheet.invoke()

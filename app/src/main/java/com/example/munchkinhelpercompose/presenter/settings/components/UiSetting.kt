@@ -7,7 +7,7 @@ abstract class UiSetting <T> {
 
     @get:StringRes abstract val title: Int?
     abstract val onResult: (T) -> Unit
-    abstract val onDismissRequest: () -> Unit
+    abstract val onDismiss: () -> Unit
 
     @Composable
     abstract fun rowUi(onClick: () -> Unit)

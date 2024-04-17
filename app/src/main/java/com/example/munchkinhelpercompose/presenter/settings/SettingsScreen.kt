@@ -44,11 +44,11 @@ private fun ColumnScope.SettingsContent(
 ) {
     val state = viewModel.state.collectAsState().value
 
-    val data = listOf(
+    val settings = listOf(
         BooleanSetting.create(
             title = R.string.sound,
             value = state.settings.sound,
-            onDismissRequest = { viewModel.editSetting(null) }
+            onDismiss = { viewModel.editSetting(null) }
         ) { result ->
             viewModel.updateSettings {
                 it.copy(
@@ -59,14 +59,13 @@ private fun ColumnScope.SettingsContent(
         BooleanSetting.create(
             title = R.string.death_counter_visibility,
             value = state.settings.isDeathCounterVisible,
-            onDismissRequest = { viewModel.editSetting(null) }
+            onDismiss = { viewModel.editSetting(null) }
         ) { result ->
             viewModel.updateSettings {
                 it.copy(
                     isDeathCounterVisible = result
                 )
             }
-
         }
     )
 
@@ -75,7 +74,7 @@ private fun ColumnScope.SettingsContent(
             .fillMaxWidth()
             .weight(1f)
     ) {
-        items(data) { item ->
+        items(settings) { item ->
             item.rowUi {
                 viewModel.editSetting(item)
             }

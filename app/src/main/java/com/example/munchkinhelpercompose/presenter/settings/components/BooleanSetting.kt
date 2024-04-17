@@ -13,12 +13,12 @@ object BooleanSetting {
         title: Int,
         value: Boolean,
         possibleValues: List<SettingValue<Boolean>> = BOOLEAN_POSSIBLE_SETTING_VALUES,
-        onDismissRequest: () -> Unit,
+        onDismiss: () -> Unit,
         onResult: (Boolean) -> Unit
     ) = DefaultUiSetting(
         title = title,
         value = value,
-        onDismissRequest = onDismissRequest,
+        onDismiss = onDismiss,
         onResult = onResult,
         possibleValues = possibleValues
     )

@@ -8,7 +8,7 @@ import com.example.munchkinhelpercompose.presenter.settings.components.UiSetting
 
 class DefaultUiSetting <T>(
     @StringRes override val title: Int?,
-    override val onDismissRequest: () -> Unit,
+    override val onDismiss: () -> Unit,
     override val value: T,
     override val possibleValues: List<SettingValue<T>>,
     override val onResult: (T) -> Unit,
@@ -18,7 +18,7 @@ class DefaultUiSetting <T>(
         fun getPreviewObject() = DefaultUiSetting(
             title = R.string.settings,
             onResult = { },
-            onDismissRequest = { },
+            onDismiss = { },
             value = true,
             possibleValues = listOf(
                 SettingValue(true, R.string.enabled),
