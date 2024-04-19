@@ -1,6 +1,5 @@
-package com.example.munchkinhelpercompose.presenter.new_game
+package com.example.munchkinhelpercompose.presenter.manage_game.new_game
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munchkinhelpercompose.use_case.game.CreateGameUseCase

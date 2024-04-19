@@ -1,11 +1,9 @@
-package com.example.munchkinhelpercompose.presenter.new_game
+package com.example.munchkinhelpercompose.presenter.manage_game.new_game
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,23 +25,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.navigation.AppScreen
+import com.example.munchkinhelpercompose.presenter.manage_game.PlayerRow
 import com.example.munchkinhelpercompose.ui.MHIcon
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.TransparentGradientSpacerH
 import com.example.munchkinhelpercompose.ui.components.buttons.MHTextButton
-import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 import com.example.munchkinhelpercompose.util.ifNotEmpty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -128,10 +124,12 @@ private fun NewGameScreenContent(
             items = state.players,
             key = { name -> name }
         ) { name ->
-            Player(
+            PlayerRow(
                 name = name,
                 modifier = Modifier.animateItemPlacement()
-            )
+            ) {
+                viewModel.removePlayer(name)
+            }
         }
     }
 }
@@ -231,38 +229,4 @@ private fun Counter(text: String) {
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.End,
     )
-}
-
-@Composable
-@Preview
-fun PlayerPreview() {
-    Player(name = "Test")
-}
-
-@Composable
-private fun Player(
-    name: String,
-    modifier: Modifier = Modifier,
-    viewModel : NewGameViewModel = hiltViewModel()
-) {
-    Card(
-        modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = name,
-                modifier = Modifier.padding(10.dp),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            ClickableResIcon(id = R.drawable.ic_minus) {
-                viewModel.removePlayer(name)
-            }
-        }
-    }
 }
