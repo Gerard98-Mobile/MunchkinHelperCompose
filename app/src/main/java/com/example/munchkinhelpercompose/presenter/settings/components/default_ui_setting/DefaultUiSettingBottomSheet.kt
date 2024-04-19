@@ -12,15 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.munchkinhelpercompose.presenter.settings.components.SettingBottomSheet
 import com.example.munchkinhelpercompose.presenter.settings.components.UiSetting
+import com.example.munchkinhelpercompose.ui.components.bottom_sheets.MHModalBottomSheet
 import com.example.munchkinhelpercompose.util.str
 
 @Composable
 fun <T> DefaultUiSettingBottomSheet(
     setting: UiSetting<T>,
 ) = Column {
-    SettingBottomSheet(
+    MHModalBottomSheet(
         title = setting.title,
         onDismissRequest = { setting.onDismiss.invoke() }
     ) { hideBottomSheet ->
