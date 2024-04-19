@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,11 +53,10 @@ class GameViewModel @Inject constructor(
     }
 
     private fun collectGame() = viewModelScope.launch {
-        getGame.invoke().first { game ->
+        getGame.invoke().collectLatest { game ->
             _state.update {
                 it.copy(game = game)
             }
-            game != null
         }
     }
 

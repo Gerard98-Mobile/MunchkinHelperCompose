@@ -16,6 +16,7 @@ import javax.inject.Inject
 interface GameRepository {
     suspend fun get(): Flow<Game?>
     suspend fun update(game: Game)
+    suspend fun reset()
     suspend fun create(players: List<String>)
 }
 
@@ -41,6 +42,16 @@ class StoreGameRepository @Inject constructor(
         withContext(ioDispatcher) {
             dataStore.edit {
                 it[GAME_KEY] = gson.toJson(game)
+            }
+        }
+    }
+
+    override suspend fun reset() {
+        withContext(ioDispatcher) {
+            dataStore.edit {
+                val data = it[GAME_KEY] ?: return@edit
+                val currentGame = gson.fromJson(data, Game::class.java)
+                it[GAME_KEY] = gson.toJson(currentGame.reset())
             }
         }
     }

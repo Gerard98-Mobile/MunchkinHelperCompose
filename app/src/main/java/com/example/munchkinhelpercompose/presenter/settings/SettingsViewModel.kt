@@ -3,7 +3,7 @@ package com.example.munchkinhelpercompose.presenter.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munchkinhelpercompose.model.Settings
-import com.example.munchkinhelpercompose.presenter.settings.components.UiSetting
+import com.example.munchkinhelpercompose.use_case.game.ResetGameUseCase
 import com.example.munchkinhelpercompose.use_case.settings.GetSettingsUseCase
 import com.example.munchkinhelpercompose.use_case.settings.UpdateSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,12 +17,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val getSettings: GetSettingsUseCase,
-    private val updateSettings: UpdateSettingsUseCase
+    private val updateSettings: UpdateSettingsUseCase,
+    private val resetGame: ResetGameUseCase,
 ) : ViewModel() {
 
     data class State(
         val settings: Settings = Settings(),
-        val editingSetting: UiSetting<*>? = null
+        val bottomSheet: SettingsBottomSheets? = null
     )
 
     private val _state = MutableStateFlow(State())
@@ -42,15 +43,19 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun editSetting(setting: UiSetting<*>?) = _state.update {
+    fun changeVisibleBottomSheet(sheet: SettingsBottomSheets?) = _state.update {
         it.copy(
-            editingSetting = setting
+            bottomSheet = sheet
         )
     }
 
     fun updateSettings(func: (Settings) -> Settings) = viewModelScope.launch {
         val newSettings = func.invoke(state.value.settings).let(func)
         updateSettings.invoke(newSettings)
+    }
+
+    fun resetGame() = viewModelScope.launch {
+        resetGame.invoke()
     }
 
 }

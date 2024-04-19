@@ -21,4 +21,10 @@ data class Player(
         level = STARTING_LEVEL,
         power = STARTING_POWER,
     )
+
+    fun reset(): Player = this.copy(
+        deaths = STARTING_DEATHS,
+        level = STARTING_LEVEL,
+        power = STARTING_POWER,
+    )
 }
