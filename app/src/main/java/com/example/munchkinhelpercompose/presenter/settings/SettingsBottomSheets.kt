@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.presenter.settings.components.UiSetting
 import com.example.munchkinhelpercompose.ui.components.bottom_sheets.options.YesNoBottomSheet
+import com.example.munchkinhelpercompose.util.str
 
 sealed class SettingsBottomSheets(
     val content: @Composable () -> Unit
@@ -27,7 +28,7 @@ private fun ResetGameBottomSheet(
     onDismiss: () -> Unit,
     onResult: (Boolean) -> Unit
 ) = YesNoBottomSheet(
-    title = R.string.reset_game,
+    title = R.string.reset_game.str(),
     onDismiss = onDismiss,
     onResult = onResult
 )

@@ -1,23 +1,23 @@
 package com.example.munchkinhelpercompose.ui.components.bottom_sheets.options
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import com.example.munchkinhelpercompose.R
+import com.example.munchkinhelpercompose.util.str
 
 @Composable
 fun YesNoBottomSheet(
-    @StringRes title: Int,
+    title: String,
     onDismiss: () -> Unit,
     onResult: (Boolean) -> Unit
 ) = OptionsBottomSheet(
     title = title,
     options = listOf(
         Option(
-            valueStringRes = R.string.yes,
+            text = R.string.yes.str(),
             onSelect = { onResult(true) }
         ),
         Option(
-            valueStringRes = R.string.no,
+            text = R.string.no.str(),
             onSelect = { onResult(false) }
         )
     ),
