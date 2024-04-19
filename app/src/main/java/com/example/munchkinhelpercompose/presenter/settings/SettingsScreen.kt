@@ -21,7 +21,7 @@ import com.example.munchkinhelpercompose.ui.components.SpacerH
 import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
 
 @Composable
-fun SettingsView(
+fun SettingsScreen(
     navController: NavController
 ) {
     Scaffold(
