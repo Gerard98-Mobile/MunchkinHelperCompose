@@ -55,17 +55,6 @@ private fun ColumnScope.SettingsContent(
                     sound = result
                 )
             }
-        },
-        BooleanSetting.create(
-            title = R.string.death_counter_visibility,
-            value = state.settings.isDeathCounterVisible,
-            onDismiss = { viewModel.editSetting(null) }
-        ) { result ->
-            viewModel.updateSettings {
-                it.copy(
-                    isDeathCounterVisible = result
-                )
-            }
         }
     )
 
