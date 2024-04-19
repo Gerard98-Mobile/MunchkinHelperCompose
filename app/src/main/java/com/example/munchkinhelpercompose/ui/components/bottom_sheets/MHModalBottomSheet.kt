@@ -18,10 +18,21 @@ import com.example.munchkinhelpercompose.ui.components.SpacerH
 import com.example.munchkinhelpercompose.util.str
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MHModalBottomSheet(
     @StringRes title: Int?,
+    onDismissRequest: () -> Unit,
+    content: @Composable ColumnScope.(() -> Unit) -> Unit
+) = MHModalBottomSheet(
+    title = title?.str(),
+    onDismissRequest = onDismissRequest,
+    content = content
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MHModalBottomSheet(
+    title: String?,
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.(() -> Unit) -> Unit
 ) {
@@ -42,7 +53,7 @@ fun MHModalBottomSheet(
         title?.let {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = title.str(),
+                text = title,
                 textAlign = TextAlign.Center
             )
         }
