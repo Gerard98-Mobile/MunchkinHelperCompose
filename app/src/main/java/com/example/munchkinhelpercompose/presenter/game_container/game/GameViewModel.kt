@@ -4,15 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munchkinhelpercompose.model.Game
 import com.example.munchkinhelpercompose.model.Player
+import com.example.munchkinhelpercompose.model.Settings
 import com.example.munchkinhelpercompose.use_case.game.GetGameUseCase
 import com.example.munchkinhelpercompose.use_case.game.PlayPlayerChangeSoundEffectUseCase
 import com.example.munchkinhelpercompose.use_case.game.UpdateGamePlayerUseCase
+import com.example.munchkinhelpercompose.use_case.settings.GetSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GameViewModel @Inject constructor(
     private val getGame: GetGameUseCase,
+    private val getSettingsUseCase: GetSettingsUseCase,
     private val updatePlayer: UpdateGamePlayerUseCase,
     private val playChangeSound: PlayPlayerChangeSoundEffectUseCase
 ) : ViewModel() {
@@ -27,7 +30,8 @@ class GameViewModel @Inject constructor(
     data class State(
         val game: Game? = null,
         val selected: Player? = null,
-        val visibleDialog: GameDialog? = null
+        val visibleDialog: GameDialog? = null,
+        val settings: Settings? = null
     ) {
         private val allLeaders = game?.players?.let { players ->
             val max = players.maxOf { it.level }
@@ -45,14 +49,22 @@ class GameViewModel @Inject constructor(
 
     init {
         collectGame()
+        collectSettings()
     }
 
     private fun collectGame() = viewModelScope.launch {
-        getGame.invoke().first { game ->
+        getGame.invoke().collectLatest { game ->
             _state.update {
                 it.copy(game = game)
             }
-            game != null
+        }
+    }
+
+    private fun collectSettings() = viewModelScope.launch {
+        getSettingsUseCase.invoke().collectLatest { settings ->
+            _state.update {
+                it.copy(settings = settings)
+            }
         }
     }
 
@@ -83,7 +95,7 @@ class GameViewModel @Inject constructor(
 
             if (player.deaths > state.selected.deaths) _killed.emit(state.selected)
 
-            playChangeSound.invoke(state.selected, player)
+            playChangeSound.invoke(state.selected, player, state.settings)
             _state.value = state.copy(
                 game = result,
                 selected = player,

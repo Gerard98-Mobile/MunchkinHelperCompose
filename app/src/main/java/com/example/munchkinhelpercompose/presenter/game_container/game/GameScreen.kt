@@ -28,12 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.ui.defaults.MHCardDefaults
 import com.example.munchkinhelpercompose.model.Player
+import com.example.munchkinhelpercompose.navigation.AppScreen
 import com.example.munchkinhelpercompose.ui.DiceFive
 import com.example.munchkinhelpercompose.ui.components.AnimatedCounter
-import com.example.munchkinhelpercompose.ui.components.text.AutoSizeText
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.PrimaryBorder
@@ -42,15 +42,22 @@ import com.example.munchkinhelpercompose.ui.components.SpacerW
 import com.example.munchkinhelpercompose.ui.components.TransparentGradientSpacerH
 import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 import com.example.munchkinhelpercompose.ui.components.image.ResIcon
+import com.example.munchkinhelpercompose.ui.components.text.AutoSizeText
+import com.example.munchkinhelpercompose.ui.defaults.MHCardDefaults
 
 
 @Composable
-fun GameScreen() {
+fun GameScreen(
+    navController: NavController
+) {
     Scaffold(
         topBar = {
             MHToolbar(
                 titleStringRes = R.string.game,
-                navigationIcon = MHToolbarNavigationIcon.None
+                navigationIcon = MHToolbarNavigationIcon.None,
+                actions = {
+                    GameScreenToolbarActions(navController)
+                }
             )
         },
         content = {
@@ -59,6 +66,17 @@ fun GameScreen() {
             }
         }
     )
+}
+
+@Composable
+private fun GameScreenToolbarActions(
+    navController: NavController
+) {
+    ClickableResIcon(
+        id = R.drawable.ic_settings
+    ) {
+        AppScreen.Settings.navigate(navController)
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
