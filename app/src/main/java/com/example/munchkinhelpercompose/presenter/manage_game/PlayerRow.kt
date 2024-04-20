@@ -19,7 +19,7 @@ import com.example.munchkinhelpercompose.ui.components.image.ClickableResIcon
 fun PlayerRow(
     name: String,
     modifier: Modifier = Modifier,
-    onRemove: () -> Unit = {}
+    onRemoveClick: () -> Unit = {}
 ) {
     Card(
         modifier
@@ -37,7 +37,7 @@ fun PlayerRow(
             )
             Spacer(modifier = Modifier.weight(1f))
             ClickableResIcon(id = R.drawable.ic_minus) {
-                onRemove()
+                onRemoveClick()
             }
         }
     }
