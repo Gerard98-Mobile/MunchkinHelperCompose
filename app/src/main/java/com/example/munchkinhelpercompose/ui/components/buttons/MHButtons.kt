@@ -12,9 +12,14 @@ import androidx.compose.ui.res.stringResource
 fun MHButton(
     @StringRes stringRes: Int,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
-    Button(onClick = onClick, modifier = modifier) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled
+    ) {
         Text(text = stringResource(id = stringRes))
     }
 }

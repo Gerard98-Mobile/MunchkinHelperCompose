@@ -26,8 +26,16 @@
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
     <string name="settings">Settings</string>
+    <string name="edit_game">Edit game</string>
     <string name="sound">Sound</string>
     <string name="reset_game">Reset game</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="remove_player">Remove %s</string>
+    <string name="save">Save</string>
+    <string name="editing">Editing %s</string>
+    <string name="confirm">Confirm</string>
+    <string name="new_player_name">New player name</string>
+    <string name="invalid_name">Invalid name</string>
+    <string name="player_already_exists">Player already exists</string>
 </resources>

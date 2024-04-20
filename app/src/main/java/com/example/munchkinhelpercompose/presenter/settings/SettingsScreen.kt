@@ -1,7 +1,7 @@
 package com.example.munchkinhelpercompose.presenter.settings
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,11 +14,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
+import com.example.munchkinhelpercompose.navigation.AppScreen
 import com.example.munchkinhelpercompose.presenter.settings.components.BooleanSetting
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.SpacerH
 import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
+
+private data class SettingsButton(
+    @StringRes val titleRes: Int,
+    val onClick: () -> Unit
+)
 
 @Composable
 fun SettingsScreen(
@@ -35,16 +41,17 @@ fun SettingsScreen(
         },
         content = {
             Column(Modifier.padding(it)) {
-                SettingsContent()
+                SettingsContent(navController)
             }
         }
     )
 }
 
 @Composable
-private fun ColumnScope.SettingsContent(
+private fun SettingsContent(
+    navController: NavController,
     viewModel: SettingsViewModel = hiltViewModel()
-) {
+) = Column(Modifier.padding(10.dp)) {
     val state = viewModel.state.collectAsState().value
 
     val settings = listOf(
@@ -61,6 +68,21 @@ private fun ColumnScope.SettingsContent(
         }
     )
 
+    val resetGameBottomSheet = SettingsBottomSheets.ResetGame(
+        onDismiss = { viewModel.changeVisibleBottomSheet(null) }
+    ) {
+        viewModel.resetGame()
+    }
+
+    val buttons = listOf(
+        SettingsButton(R.string.edit_game) {
+            AppScreen.EditGame.navigate(navController)
+        },
+        SettingsButton(R.string.reset_game) {
+            viewModel.changeVisibleBottomSheet(resetGameBottomSheet)
+        },
+    )
+
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,19 +95,15 @@ private fun ColumnScope.SettingsContent(
         }
     }
 
-    val resetGame = SettingsBottomSheets.ResetGame(
-        onDismiss = { viewModel.changeVisibleBottomSheet(null) }
-    ) {
-        viewModel.resetGame()
+    buttons.forEach {
+        MHButton(
+            stringRes = it.titleRes,
+            modifier = Modifier
+                .fillMaxWidth(),
+            onClick = it.onClick
+        )
+        SpacerH(dp = 5.dp)
     }
-
-    MHButton(
-        stringRes = R.string.reset_game,
-        modifier = Modifier.fillMaxWidth().padding(10.dp)
-    ) {
-        viewModel.changeVisibleBottomSheet(resetGame)
-    }
-    SpacerH(dp = 10.dp)
 
     state.bottomSheet?.let {
         state.bottomSheet.content()

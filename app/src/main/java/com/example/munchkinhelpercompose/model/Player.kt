@@ -7,10 +7,12 @@ data class Player(
     val deaths: Int = STARTING_DEATHS
 ) {
 
-    private companion object {
-        const val STARTING_LEVEL = 1
-        const val STARTING_POWER = 0
-        const val STARTING_DEATHS = 0
+    companion object {
+        const val MAX_PLAYER_NAME_LENGTH = 20
+        const val MIN_PLAYER_NAME_LENGTH = 1
+        private const val STARTING_LEVEL = 1
+        private const val STARTING_POWER = 0
+        private const val STARTING_DEATHS = 0
     }
 
     val powerWithLevel : Int

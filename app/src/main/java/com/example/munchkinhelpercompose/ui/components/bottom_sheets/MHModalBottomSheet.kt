@@ -1,4 +1,4 @@
-package com.example.munchkinhelpercompose.presenter.settings.components
+package com.example.munchkinhelpercompose.ui.components.bottom_sheets
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
@@ -18,10 +18,21 @@ import com.example.munchkinhelpercompose.ui.components.SpacerH
 import com.example.munchkinhelpercompose.util.str
 import kotlinx.coroutines.launch
 
+@Composable
+fun MHModalBottomSheet(
+    @StringRes title: Int?,
+    onDismissRequest: () -> Unit,
+    content: @Composable ColumnScope.(() -> Unit) -> Unit
+) = MHModalBottomSheet(
+    title = title?.str(),
+    onDismissRequest = onDismissRequest,
+    content = content
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingBottomSheet(
-    @StringRes title: Int?,
+fun MHModalBottomSheet(
+    title: String?,
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.(() -> Unit) -> Unit
 ) {
@@ -42,7 +53,7 @@ fun SettingBottomSheet(
         title?.let {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = title.str(),
+                text = title,
                 textAlign = TextAlign.Center
             )
         }
