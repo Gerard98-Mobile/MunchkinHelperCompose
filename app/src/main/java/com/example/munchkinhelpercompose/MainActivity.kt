@@ -1,6 +1,5 @@
 package com.example.munchkinhelpercompose
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,8 +13,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -48,8 +45,6 @@ fun MainActivityContent(
 ) {
     val state by viewModel.state.collectAsState()
 
-    val view = LocalView.current
-
     AppTheme(
         darkTheme = state.settings?.darkMode ?: false
     ) {
@@ -59,10 +54,7 @@ fun MainActivityContent(
         ) {
             Box {
                 if (state.settings != null) {
-                    val primaryColor = MaterialTheme.colorScheme.primary.toArgb()
                     SideEffect {
-                        val window = (view.context as Activity).window
-                        window.statusBarColor = primaryColor
                         viewModel.hideSplash()
                     }
                 }
