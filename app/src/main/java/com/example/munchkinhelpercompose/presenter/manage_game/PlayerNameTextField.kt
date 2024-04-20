@@ -74,8 +74,10 @@ fun PlayerNameTextField(
             .padding(10.dp),
         keyboardActions = KeyboardActions(
             onDone = {
-                if (!state.isError.value) {
+                if (state.name.value.isNameAllowed()) {
                     onCreate.invoke(state.name.value)
+                } else {
+                    state.isError.value = true
                 }
                 state.userInteracted.value = true
             }
@@ -85,7 +87,7 @@ fun PlayerNameTextField(
             autoCorrect = false
         ),
         trailingIcon = {
-            if (!state.isError.value) {
+            if (state.name.value.isNameAllowed()) {
                 trailingIcon(state)
             }
         },
