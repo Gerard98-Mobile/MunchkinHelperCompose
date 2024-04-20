@@ -65,6 +65,17 @@ private fun SettingsContent(
                     sound = result
                 )
             }
+        },
+        BooleanSetting.create(
+            title = R.string.dark_mode,
+            value = state.settings.darkMode,
+            onDismiss = { viewModel.changeVisibleBottomSheet(null) }
+        ) { result ->
+            viewModel.updateSettings {
+                it.copy(
+                    darkMode = result
+                )
+            }
         }
     )
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -28,8 +29,7 @@ private fun HomeContent(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) = Column(Modifier.fillMaxSize()) {
-
-    val state = viewModel.state.collectAsState().value
+    val state by viewModel.state.collectAsState()
 
     ColumnCentered(
         Modifier
