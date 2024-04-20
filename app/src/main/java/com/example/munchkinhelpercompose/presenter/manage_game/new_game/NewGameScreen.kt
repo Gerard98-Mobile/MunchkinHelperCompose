@@ -25,9 +25,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.navigation.AppScreen
-import com.example.munchkinhelpercompose.presenter.manage_game.CreatePlayerTextField
+import com.example.munchkinhelpercompose.presenter.manage_game.PlayerNameTextField
 import com.example.munchkinhelpercompose.presenter.manage_game.PlayerRow
-import com.example.munchkinhelpercompose.presenter.manage_game.rememberCreatePlayerTextFieldState
+import com.example.munchkinhelpercompose.presenter.manage_game.rememberPlayerNameTextFieldState
 import com.example.munchkinhelpercompose.ui.MHIcon
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
@@ -174,14 +174,14 @@ private fun NewPlayerTextField(
 ){
     val state = viewModel.state.collectAsState().value
 
-    val textFieldState = rememberCreatePlayerTextFieldState()
+    val textFieldState = rememberPlayerNameTextFieldState()
 
     fun addPlayer() {
         viewModel.addPlayer(textFieldState.name.value)
         textFieldState.name.value = ""
     }
 
-    CreatePlayerTextField(
+    PlayerNameTextField(
         players = state.players,
         state = textFieldState,
         trailingIcon = {

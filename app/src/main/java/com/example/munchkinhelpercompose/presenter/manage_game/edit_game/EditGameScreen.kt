@@ -17,11 +17,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
+import com.example.munchkinhelpercompose.presenter.manage_game.AddPlayerRow
 import com.example.munchkinhelpercompose.presenter.manage_game.PlayerRow
 import com.example.munchkinhelpercompose.presenter.manage_game.edit_game.bottom_sheet.EditGameBottomSheet
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
+import com.example.munchkinhelpercompose.ui.components.SpacerH
+import com.example.munchkinhelpercompose.ui.components.TransparentGradientSpacerH
 import com.example.munchkinhelpercompose.ui.components.buttons.MHTextButton
+import com.example.munchkinhelpercompose.util.str
 
 @Composable
 fun EditGameScreen(
@@ -59,9 +63,13 @@ private fun ColumnScope.EditGameContent(
     val state = viewModel.state.collectAsState().value
 
     LazyColumn(
-        modifier = Modifier.weight(1f),
-        contentPadding = PaddingValues(bottom = 40.dp),
+        modifier = Modifier.weight(1f, false),
+        contentPadding = PaddingValues(bottom = 10.dp),
     ) {
+        stickyHeader {
+            TransparentGradientSpacerH(dp = 5.dp)
+        }
+
         items(
             items = state.game?.players?.toList() ?: emptyList(),
             key = { player -> player.name }
@@ -70,7 +78,9 @@ private fun ColumnScope.EditGameContent(
                 name = player.name,
                 modifier = Modifier
                     .clickable {
-                        viewModel.changeVisibleBottomSheet(EditGameBottomSheet.EditPlayerName(player))
+                        viewModel.changeVisibleBottomSheet(EditGameBottomSheet.EditPlayerName(player) {
+                            viewModel.updatePlayerName(player, it)
+                        })
                     }
                     .animateItemPlacement(),
                 onRemoveClick = {
@@ -79,6 +89,16 @@ private fun ColumnScope.EditGameContent(
             )
         }
     }
+
+    SpacerH(dp = 10.dp)
+    AddPlayerRow(
+        name = R.string.add_player.str()
+    ) {
+        viewModel.changeVisibleBottomSheet(EditGameBottomSheet.CreatePlayer {
+            viewModel.addPlayer(it)
+        })
+    }
+    SpacerH(dp = 10.dp)
 
     state.visibleBottomSheets?.let {
         it.content(viewModel)

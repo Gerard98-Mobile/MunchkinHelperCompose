@@ -61,7 +61,15 @@ class EditGameViewModel @Inject constructor(
         }
     }
 
-    fun changePlayerName(oldPlayer: Player, newName: String) = _state.update {
+    fun addPlayer(name: String) = _state.update {
+        it.copy(
+            game = it.game?.copy(
+                players = it.game.players.plus(Player(name))
+            )
+        )
+    }
+
+    fun updatePlayerName(oldPlayer: Player, newName: String) = _state.update {
         val newListOfPlayers = it.game?.players?.map { player ->
             if (player.name == oldPlayer.name) player.copy(name = newName)
             else player

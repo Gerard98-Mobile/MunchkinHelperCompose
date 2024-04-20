@@ -24,18 +24,18 @@ import com.example.munchkinhelpercompose.model.Player
 import com.example.munchkinhelpercompose.ui.components.text.CounterText
 import com.example.munchkinhelpercompose.util.str
 
-class CreatePlayerTextFieldState(
+class PlayerNameTextFieldState(
     var isError: MutableState<Boolean>,
     var name: MutableState<String>,
     val userInteracted: MutableState<Boolean>
 )
 
 @Composable
-fun rememberCreatePlayerTextFieldState(
+fun rememberPlayerNameTextFieldState(
     isError: MutableState<Boolean> = mutableStateOf(true),
     name: MutableState<String> = mutableStateOf(""),
 ) = remember {
-    CreatePlayerTextFieldState(
+    PlayerNameTextFieldState(
         isError = isError,
         name = name,
         userInteracted = mutableStateOf(false)
@@ -43,10 +43,10 @@ fun rememberCreatePlayerTextFieldState(
 }
 
 @Composable
-fun CreatePlayerTextField(
+fun PlayerNameTextField(
     players: List<String>,
-    state: CreatePlayerTextFieldState = rememberCreatePlayerTextFieldState(),
-    trailingIcon: @Composable (CreatePlayerTextFieldState) -> Unit = { },
+    state: PlayerNameTextFieldState = rememberPlayerNameTextFieldState(),
+    trailingIcon: @Composable (PlayerNameTextFieldState) -> Unit = { },
     focusAtStart: Boolean = false,
     onCreate: (String) -> Unit,
 ) {

@@ -38,4 +38,5 @@
     <string name="new_player_name">New player name</string>
     <string name="invalid_name">Invalid name</string>
     <string name="player_already_exists">Player already exists</string>
+    <string name="add_player">Add player</string>
 </resources>

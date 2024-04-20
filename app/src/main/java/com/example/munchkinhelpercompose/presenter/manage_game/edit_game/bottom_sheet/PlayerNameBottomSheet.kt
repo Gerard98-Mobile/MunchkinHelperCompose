@@ -5,37 +5,33 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.munchkinhelpercompose.R
-import com.example.munchkinhelpercompose.model.Player
-import com.example.munchkinhelpercompose.presenter.manage_game.CreatePlayerTextField
-import com.example.munchkinhelpercompose.presenter.manage_game.edit_game.EditGameViewModel
-import com.example.munchkinhelpercompose.presenter.manage_game.rememberCreatePlayerTextFieldState
+import com.example.munchkinhelpercompose.presenter.manage_game.PlayerNameTextField
+import com.example.munchkinhelpercompose.presenter.manage_game.rememberPlayerNameTextFieldState
 import com.example.munchkinhelpercompose.ui.components.bottom_sheets.MHModalBottomSheet
 import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
-import com.example.munchkinhelpercompose.util.str
 
 @Composable
-fun EditPlayerNameBottomSheet(
-    player: Player,
-    viewModel: EditGameViewModel = hiltViewModel(),
+fun PlayerNameBottomSheet(
+    title: String,
+    occupiedPlayerNames: List<String>,
+    onResult: (String) -> Unit,
     onDismiss: () -> Unit = {},
 ) {
-    val state = viewModel.state.value
 
-    val textFieldState = rememberCreatePlayerTextFieldState()
+    val textFieldState = rememberPlayerNameTextFieldState()
 
     MHModalBottomSheet(
-        title = R.string.editing.str(player.name),
+        title = title,
         onDismissRequest = { onDismiss() },
     ) { hide ->
-        CreatePlayerTextField(
-            players = state.game?.players?.toList()?.map { it.name } ?: emptyList(),
+        PlayerNameTextField(
+            players = occupiedPlayerNames,
             state = textFieldState,
             focusAtStart = true,
         ) {
             hide.invoke()
-            viewModel.changePlayerName(player, it)
+            onResult(it)
         }
 
         MHButton(
@@ -46,7 +42,7 @@ fun EditPlayerNameBottomSheet(
             enabled = !textFieldState.isError.value
         ) {
             hide.invoke()
-            viewModel.changePlayerName(player, textFieldState.name.value)
+            onResult(textFieldState.name.value)
         }
     }
 }

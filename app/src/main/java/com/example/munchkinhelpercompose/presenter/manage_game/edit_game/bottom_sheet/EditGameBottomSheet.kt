@@ -18,12 +18,20 @@ sealed class EditGameBottomSheet(
 
     class EditPlayerName(
         player: Player,
+        onResult: (String) -> Unit
     ) : EditGameBottomSheet(
         content = {
-            EditPlayerNameContent(player, it)
+            EditPlayerNameContent(player, it, onResult)
         }
     )
 
+    class CreatePlayer(
+        onResult: (String) -> Unit
+    ) : EditGameBottomSheet(
+        content = {
+            CreatePlayerContent(it, onResult)
+        }
+    )
 }
 
 @Composable
@@ -43,10 +51,26 @@ private fun RemovePlayerBottomSheet(
 @Composable
 private fun EditPlayerNameContent(
     player: Player,
-    viewModel: EditGameViewModel = hiltViewModel()
+    viewModel: EditGameViewModel = hiltViewModel(),
+    onResult: (String) -> Unit
 ){
-    EditPlayerNameBottomSheet(
-        player = player,
-        onDismiss = { viewModel.changeVisibleBottomSheet(null) }
+    PlayerNameBottomSheet(
+        title = R.string.editing.str(player.name),
+        occupiedPlayerNames = viewModel.state.value.game?.players?.map { it.name } ?: emptyList(),
+        onDismiss = { viewModel.changeVisibleBottomSheet(null) },
+        onResult = onResult
+    )
+}
+
+@Composable
+private fun CreatePlayerContent(
+    viewModel: EditGameViewModel = hiltViewModel(),
+    onResult: (String) -> Unit
+){
+    PlayerNameBottomSheet(
+        title = R.string.add_player.str(),
+        occupiedPlayerNames = viewModel.state.value.game?.players?.map { it.name } ?: emptyList(),
+        onDismiss = { viewModel.changeVisibleBottomSheet(null) },
+        onResult = onResult
     )
 }
