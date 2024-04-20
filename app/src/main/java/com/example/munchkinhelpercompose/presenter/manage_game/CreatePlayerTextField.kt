@@ -26,17 +26,19 @@ import com.example.munchkinhelpercompose.util.str
 
 class CreatePlayerTextFieldState(
     var isError: MutableState<Boolean>,
-    var name: MutableState<String>
+    var name: MutableState<String>,
+    val userInteracted: MutableState<Boolean>
 )
 
 @Composable
 fun rememberCreatePlayerTextFieldState(
-    isError: MutableState<Boolean> = mutableStateOf(false),
+    isError: MutableState<Boolean> = mutableStateOf(true),
     name: MutableState<String> = mutableStateOf(""),
 ) = remember {
     CreatePlayerTextFieldState(
         isError = isError,
-        name = name
+        name = name,
+        userInteracted = mutableStateOf(false)
     )
 }
 
@@ -62,6 +64,7 @@ fun CreatePlayerTextField(
         value = state.name.value,
         onValueChange = {
             if (it.length <= Player.MAX_PLAYER_NAME_LENGTH) state.name.value = it
+            state.userInteracted.value = true
             state.isError.value = !state.name.value.isNameAllowed()
         },
         label = { Text(stringResource(id = R.string.player_name)) },
@@ -74,6 +77,7 @@ fun CreatePlayerTextField(
                 if (!state.isError.value) {
                     onCreate.invoke(state.name.value)
                 }
+                state.userInteracted.value = true
             }
         ),
         keyboardOptions = KeyboardOptions(
@@ -85,9 +89,9 @@ fun CreatePlayerTextField(
                 trailingIcon(state)
             }
         },
-        isError = state.isError.value,
+        isError = state.isError.value && state.userInteracted.value,
         supportingText = {
-            if (state.isError.value) ErrorText(R.string.invalid_name)
+            if (state.isError.value && state.userInteracted.value) ErrorText(R.string.invalid_name)
             else CounterText(state.name.value, Player.MAX_PLAYER_NAME_LENGTH)
         },
         singleLine = true
