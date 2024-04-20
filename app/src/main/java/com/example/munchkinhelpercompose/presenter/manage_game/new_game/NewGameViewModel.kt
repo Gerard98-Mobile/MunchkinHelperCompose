@@ -7,7 +7,9 @@ import com.example.munchkinhelpercompose.use_case.hint.GetHintsUseCase
 import com.example.munchkinhelpercompose.use_case.hint.SaveHintsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
@@ -25,11 +27,13 @@ class NewGameViewModel @Inject constructor(
     data class UiState(
         val players: List<String> = emptyList(),
         val hints: Set<String> = emptySet(),
-        val error: String? = null
     )
 
     private val _state = MutableStateFlow(UiState())
     val state = _state.asStateFlow()
+
+    private val _snackbar = MutableSharedFlow<String>()
+    val snackbar = _snackbar.asSharedFlow()
 
     init {
         collectHints()
@@ -38,17 +42,10 @@ class NewGameViewModel @Inject constructor(
     fun addPlayer(
         playerName: String,
     ) {
-        when {
-            state.value.players.contains(playerName) -> changeErrorState("Player already exists")
-            playerName.isEmpty() -> changeErrorState("Player name is empty")
-            else -> {
-                _state.update {
-                    it.copy(
-                        players = it.players.toMutableList().apply { add(0, playerName) },
-                        error = null
-                    )
-                }
-            }
+        _state.update {
+            it.copy(
+                players = it.players.toMutableList().apply { add(0, playerName) },
+            )
         }
     }
 
@@ -68,13 +65,13 @@ class NewGameViewModel @Inject constructor(
         }
     }
 
-    fun changeErrorState(error: String?) = _state.update {
-        it.copy(error = error)
-    }
-
     fun createGame() = viewModelScope.launch(dispatcher) {
         createGame.invoke(state.value.players)
         saveHints.invoke(state.value.players.toList())
+    }
+
+    fun showSnackbar(message: String) = viewModelScope.launch {
+        _snackbar.emit(message)
     }
 
 }

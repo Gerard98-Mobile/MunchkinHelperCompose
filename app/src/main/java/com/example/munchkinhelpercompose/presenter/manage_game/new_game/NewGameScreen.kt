@@ -5,57 +5,57 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.navigation.AppScreen
+import com.example.munchkinhelpercompose.presenter.manage_game.CreatePlayerTextField
 import com.example.munchkinhelpercompose.presenter.manage_game.PlayerRow
+import com.example.munchkinhelpercompose.presenter.manage_game.rememberCreatePlayerTextFieldState
 import com.example.munchkinhelpercompose.ui.MHIcon
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.TransparentGradientSpacerH
 import com.example.munchkinhelpercompose.ui.components.buttons.MHTextButton
 import com.example.munchkinhelpercompose.util.ifNotEmpty
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import com.example.munchkinhelpercompose.util.str
+import kotlinx.coroutines.flow.collectLatest
 
-private const val MAX_PLAYER_NAME_LENGTH = 20
 private const val MIN_PLAYERS_COUNT = 2
 
 @Composable
 fun NewGameScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel : NewGameViewModel = hiltViewModel()
 ){
     val snackbarHostState = remember { SnackbarHostState() }
 
+    LaunchedEffect(null) {
+        viewModel.snackbar.collectLatest {
+            snackbarHostState.showSnackbar(it)
+        }
+    }
+
     Scaffold(
+        modifier = Modifier.imePadding(),
         topBar = {
-            NewGameScreenToolbar(navController, snackbarHostState)
+            NewGameScreenToolbar(navController, viewModel)
         },
         content = {
             Column(Modifier.padding(it)) {
@@ -71,12 +71,10 @@ fun NewGameScreen(
 @Composable
 private fun NewGameScreenToolbar(
     navController: NavController,
-    snackbarHostState: SnackbarHostState,
-    scope : CoroutineScope = rememberCoroutineScope(),
     viewModel : NewGameViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState().value
-    val playersCountError = stringResource(id = R.string.not_enough_players_error)
+    val playersCountError =  R.string.not_enough_players_error.str()
     
     MHToolbar(
         titleStringRes = R.string.new_game,
@@ -89,9 +87,7 @@ private fun NewGameScreenToolbar(
                     viewModel.createGame()
                     AppScreen.Game.navigate(navController)
                 } else {
-                    scope.launch {
-                        snackbarHostState.showSnackbar(playersCountError)
-                    }
+                    viewModel.showSnackbar(playersCountError)
                 }
             }
         }
@@ -161,8 +157,14 @@ private fun Hint(
     hint: String,
     viewModel: NewGameViewModel = hiltViewModel()
 ) {
+    val playerExistsError = R.string.player_already_exists.str()
     MHTextButton(string = hint) {
-        viewModel.addPlayer(hint)
+        if (viewModel.state.value.players.contains(hint)) {
+            viewModel.showSnackbar(playerExistsError)
+        }
+        else {
+            viewModel.addPlayer(hint)
+        }
     }
 }
 
@@ -172,61 +174,20 @@ private fun NewPlayerTextField(
 ){
     val state = viewModel.state.collectAsState().value
 
-    var playerName by remember {
-        mutableStateOf("")
+    val textFieldState = rememberCreatePlayerTextFieldState()
+
+    fun addPlayer() {
+        viewModel.addPlayer(textFieldState.name.value)
+        textFieldState.name.value = ""
     }
 
-    OutlinedTextField(
-        value = playerName,
-        onValueChange = {
-            if (it.length <= MAX_PLAYER_NAME_LENGTH) playerName = it
-            viewModel.changeErrorState(null)
-        },
-        label = { Text(stringResource(id = R.string.player_name)) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                viewModel.addPlayer(playerName)
-                playerName = ""
-            }
-        ),
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Done,
-            autoCorrect = false
-        ),
+    CreatePlayerTextField(
+        players = state.players,
+        state = textFieldState,
         trailingIcon = {
-            MHIcon.Plus {
-                viewModel.addPlayer(playerName)
-                playerName = ""
-            }
-        },
-        isError = state.error != null,
-        supportingText = {
-            state.error.let {
-                if (it != null) Error(it)
-                else Counter(playerName)
-            }
-
-        },
-        singleLine = true
-    )
-}
-
-@Composable
-private fun Error(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.labelLarge
-    )
-}
-
-@Composable
-private fun Counter(text: String) {
-    Text(
-        text = "${text.length} / $MAX_PLAYER_NAME_LENGTH",
-        modifier = Modifier.fillMaxWidth(),
-        textAlign = TextAlign.End,
-    )
+            MHIcon.Plus { addPlayer() }
+        }
+    ) {
+        addPlayer()
+    }
 }
