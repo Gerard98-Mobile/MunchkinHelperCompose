@@ -15,7 +15,7 @@ import androidx.navigation.compose.rememberNavController
 /**
  * Child have to be an object instance!!!
  */
-sealed class NavigationView(
+sealed class NavigationScreen(
     val route: String,
     val content: @Composable (NavController, NavBackStackEntry) -> Unit
 ) {
@@ -34,7 +34,7 @@ fun AppNavHost(
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(navController = navController, startDestination = AppScreen.Home.route) {
-        NavigationView::class.sealedSubclasses.forEach {
+        NavigationScreen::class.sealedSubclasses.forEach {
             it.objectInstance?.let { view ->
                 composable(
                     route = view.route

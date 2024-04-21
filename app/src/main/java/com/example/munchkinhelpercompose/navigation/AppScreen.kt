@@ -9,21 +9,21 @@ import com.example.munchkinhelpercompose.presenter.manage_game.new_game.NewGameS
 import com.example.munchkinhelpercompose.presenter.settings.SettingsScreen
 
 object AppScreen {
-    object Home : NavigationView(
+    object Home : NavigationScreen(
         route = "home",
         content = { controller, _ ->
             HomeScreen(controller)
         }
     )
 
-    object NewGame : NavigationView(
+    object NewGame : NavigationScreen(
         route = "new_game",
         content = { controller, _ ->
             NewGameScreen(controller)
         }
     )
 
-    object Game : NavigationView(
+    object Game : NavigationScreen(
         route = "game",
         content = { controller, _ ->
             GameScreen(controller)
@@ -36,14 +36,14 @@ object AppScreen {
         }
     }
 
-    object Settings : NavigationView(
+    object Settings : NavigationScreen(
         route = "settings",
         content = { controller, _ ->
             SettingsScreen(controller)
         }
     )
 
-    object EditGame : NavigationView(
+    object EditGame : NavigationScreen(
         route = "edit_game",
         content = { controller, _ ->
             EditGameScreen(controller)
