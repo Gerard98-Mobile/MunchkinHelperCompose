@@ -16,10 +16,13 @@ import androidx.navigation.NavController
 import com.example.munchkinhelpercompose.R
 import com.example.munchkinhelpercompose.navigation.AppScreen
 import com.example.munchkinhelpercompose.presenter.settings.components.BooleanSetting
+import com.example.munchkinhelpercompose.presenter.settings.components.SettingValue
+import com.example.munchkinhelpercompose.presenter.settings.components.default_ui_setting.DefaultUiSetting
 import com.example.munchkinhelpercompose.ui.components.MHToolbar
 import com.example.munchkinhelpercompose.ui.components.MHToolbarNavigationIcon
 import com.example.munchkinhelpercompose.ui.components.SpacerH
 import com.example.munchkinhelpercompose.ui.components.buttons.MHButton
+import com.example.munchkinhelpercompose.ui.theme.AppThemeType
 
 private data class SettingsButton(
     @StringRes val titleRes: Int,
@@ -66,14 +69,15 @@ private fun SettingsContent(
                 )
             }
         },
-        BooleanSetting.create(
+        DefaultUiSetting(
             title = R.string.dark_mode,
-            value = state.settings.darkMode,
-            onDismiss = { viewModel.changeVisibleBottomSheet(null) }
+            value = state.settings.appThemeType,
+            onDismiss = { viewModel.changeVisibleBottomSheet(null) },
+            possibleValues = AppThemeType.values().map { SettingValue(it, it.stringRepresentationRes) }
         ) { result ->
             viewModel.updateSettings {
                 it.copy(
-                    darkMode = result
+                    appThemeType = result
                 )
             }
         }

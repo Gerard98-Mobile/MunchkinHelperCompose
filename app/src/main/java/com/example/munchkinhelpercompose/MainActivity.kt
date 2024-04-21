@@ -18,6 +18,7 @@ import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.munchkinhelpercompose.navigation.AppNavHost
 import com.example.munchkinhelpercompose.ui.theme.AppTheme
+import com.example.munchkinhelpercompose.ui.theme.AppThemeType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,7 +47,7 @@ fun MainActivityContent(
     val state by viewModel.state.collectAsState()
 
     AppTheme(
-        darkTheme = state.settings?.darkMode ?: false
+        appThemeType = state.settings?.appThemeType ?: AppThemeType.AUTO
     ) {
         Surface(
             modifier = Modifier.fillMaxSize(),

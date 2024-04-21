@@ -1,7 +1,9 @@
 package com.example.munchkinhelpercompose.ui.theme
 
 import android.app.Activity
+import androidx.annotation.StringRes
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -149,21 +151,39 @@ val MyTypography = with(Typography()) {
     )
 }
 
+enum class AppThemeType(
+    @StringRes val stringRepresentationRes: Int,
+    val getColorScheme: @Composable () -> ColorScheme
+) {
+    LIGHT(
+        stringRepresentationRes = R.string.light,
+        getColorScheme = { LightColorScheme }
+    ),
+    DARK(
+        stringRepresentationRes = R.string.dark,
+        getColorScheme = { DarkColorScheme }
+    ),
+    AUTO(
+        stringRepresentationRes = R.string.auto,
+        getColorScheme = {
+            if (isSystemInDarkTheme()) DarkColorScheme
+            else LightColorScheme
+        }
+    )
+}
+
 @Composable
 fun AppTheme(
-  darkTheme: Boolean = isSystemInDarkTheme(),
-  content: @Composable () -> Unit
+    appThemeType: AppThemeType = AppThemeType.AUTO,
+    content: @Composable () -> Unit
 ) {
-  val colorScheme = when {
-    darkTheme -> DarkColorScheme
-    else -> LightColorScheme
-  }
+  val colorScheme = appThemeType.getColorScheme()
   val view = LocalView.current
   if (!view.isInEditMode) {
     SideEffect {
         val window = (view.context as Activity).window
         window.statusBarColor = colorScheme.primary.toArgb()
-        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = colorScheme == DarkColorScheme
     }
   }
 

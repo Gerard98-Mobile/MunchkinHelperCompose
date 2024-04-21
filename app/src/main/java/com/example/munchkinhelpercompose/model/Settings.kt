@@ -1,6 +1,8 @@
 package com.example.munchkinhelpercompose.model
 
+import com.example.munchkinhelpercompose.ui.theme.AppThemeType
+
 data class Settings(
     val sound: Boolean = true,
-    val darkMode: Boolean = false
+    val appThemeType: AppThemeType = AppThemeType.AUTO
 )

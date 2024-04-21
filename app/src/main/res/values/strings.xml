@@ -40,4 +40,7 @@
     <string name="player_already_exists">Player already exists</string>
     <string name="add_player">Add player</string>
     <string name="dark_mode">Dark mode</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="auto">Auto</string>
 </resources>
