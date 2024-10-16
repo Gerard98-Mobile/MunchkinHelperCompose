@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.ui'
+    namespace 'gerard.example.ui'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.ui"
+        applicationId "gerard.example.ui"
         minSdk 24
         targetSdk 33
         versionCode 1

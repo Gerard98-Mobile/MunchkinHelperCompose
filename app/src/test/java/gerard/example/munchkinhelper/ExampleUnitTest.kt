@@ -1,4 +1,4 @@
-package gerard.example.ui
+package gerard.example.munchkinhelper
 
 import org.junit.Test
 
