@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface SettingsRepository {
-    suspend fun get(): Flow<Settings?>
+    suspend fun get(): Flow<Settings>
     suspend fun update(settings: Settings)
 
 }
@@ -28,11 +28,11 @@ class StoreSettingsRepository @Inject constructor(
         private val SETTINGS_KEY = stringPreferencesKey("settings_key")
     }
 
-    override suspend fun get(): Flow<Settings?> = withContext(ioDispatcher) {
+    override suspend fun get(): Flow<Settings> = withContext(ioDispatcher) {
         return@withContext dataStore.data.map {
             it[SETTINGS_KEY]?.let { data ->
                 gson.fromJson(data, Settings::class.java)
-            }
+            } ?: Settings()
         }
     }
 
