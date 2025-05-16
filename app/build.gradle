@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'gerard.example.munchkinhelper'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "gerard.example.munchkinhelper"
         minSdk 24
-        targetSdk 35
+        targetSdk 36
         versionCode 10300
         versionName "3.0.0"
 
