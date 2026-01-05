@@ -24,9 +24,14 @@ class NewGameViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
+    companion object {
+        private const val DEFAULT_SAFE_LEVELS = 3
+    }
+
     data class UiState(
         val players: List<String> = emptyList(),
         val hints: Set<String> = emptySet(),
+        val safeLevels: Int = DEFAULT_SAFE_LEVELS
     )
 
     private val _state = MutableStateFlow(UiState())
@@ -66,12 +71,19 @@ class NewGameViewModel @Inject constructor(
     }
 
     fun createGame() = viewModelScope.launch(dispatcher) {
-        createGame.invoke(state.value.players)
+        createGame.invoke(state.value.players, state.value.safeLevels)
         saveHints.invoke(state.value.players.toList())
     }
 
     fun showSnackbar(message: String) = viewModelScope.launch {
         _snackbar.emit(message)
+    }
+
+    fun increaseSafeLevels() {
+        _state.update {
+            val safeLevels = it.safeLevels + 1
+            it.copy(safeLevels = if (safeLevels >= 10) 0 else safeLevels)
+        }
     }
 
 }

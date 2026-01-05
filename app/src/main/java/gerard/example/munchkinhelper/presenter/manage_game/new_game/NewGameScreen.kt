@@ -2,11 +2,14 @@ package gerard.example.munchkinhelper.presenter.manage_game.new_game
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -15,10 +18,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,6 +36,7 @@ import gerard.example.munchkinhelper.presenter.manage_game.rememberPlayerNameTex
 import gerard.example.munchkinhelper.ui.MHIcon
 import gerard.example.munchkinhelper.ui.components.MHToolbar
 import gerard.example.munchkinhelper.ui.components.MHToolbarNavigationIcon
+import gerard.example.munchkinhelper.ui.components.SpacerW
 import gerard.example.munchkinhelper.ui.components.TransparentGradientSpacerH
 import gerard.example.munchkinhelper.ui.components.buttons.MHTextButton
 import gerard.example.munchkinhelper.util.ifNotEmpty
@@ -102,6 +108,11 @@ private fun NewGameScreenContent(
 
     val state = viewModel.state.collectAsState().value
 
+    SafeLevels(
+        levels = state.safeLevels,
+        increaseSaveLevels = { viewModel.increaseSafeLevels() }
+    )
+
     NewPlayerTextField(
         viewModel = viewModel
     )
@@ -127,6 +138,34 @@ private fun NewGameScreenContent(
                 viewModel.removePlayer(name)
             }
         }
+    }
+}
+
+@Composable
+private fun SafeLevels(
+    levels: Int,
+    increaseSaveLevels: () -> Unit = {},
+) = Card(
+    modifier = Modifier.fillMaxWidth().padding(10.dp),
+    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+) {
+    Row(
+        modifier = Modifier.clickable {
+            increaseSaveLevels()
+        }.padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        MHIcon.Shield(Modifier.size(28.dp))
+        SpacerW(4.dp)
+        Text(
+            modifier = Modifier.weight(1f),
+            text = R.string.protected_levels.str()
+        )
+
+        Text(
+            text = levels.toString()
+        )
+        SpacerW(12.dp)
     }
 }
 

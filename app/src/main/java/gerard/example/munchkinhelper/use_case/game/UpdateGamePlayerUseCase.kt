@@ -10,7 +10,9 @@ class UpdateGamePlayerUseCase @Inject constructor(
     private val updatePlayer: UpdatePlayerUseCase
 ) {
     suspend operator fun invoke(player: Player, update: Player.() -> Player, game: Game): Game? {
-        val updated = updatePlayer(player, update) ?: return null
+        var updated = updatePlayer(player, update) ?: return null
+
+        updated = if (updated.level > game.safeLevels) updated.copy(protected = false) else updated
 
         val players = game.players.toMutableList()
         val changedPlayerIdx = game.players.indexOf(player)

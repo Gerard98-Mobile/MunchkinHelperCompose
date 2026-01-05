@@ -17,7 +17,7 @@ interface GameRepository {
     suspend fun get(): Flow<Game?>
     suspend fun update(game: Game)
     suspend fun reset()
-    suspend fun create(players: List<String>)
+    suspend fun create(players: List<String>, safeLevels: Int)
 }
 
 class StoreGameRepository @Inject constructor(
@@ -56,15 +56,16 @@ class StoreGameRepository @Inject constructor(
         }
     }
 
-    override suspend fun create(players: List<String>) {
+    override suspend fun create(players: List<String>, safeLevels: Int) {
         withContext(ioDispatcher) {
             dataStore.edit {
                 val game = Game(
                     players = buildSet {
-                        players.forEach {
-                            add(Player(it))
+                        players.forEach { name ->
+                            add(Player(name))
                         }
-                    }
+                    },
+                    safeLevels = safeLevels
                 )
                 it[GAME_KEY] = gson.toJson(game)
             }

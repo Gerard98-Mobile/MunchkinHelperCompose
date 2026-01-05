@@ -12,7 +12,9 @@
     <string name="fight">Fight</string>
     <string name="throw_dice">Throw</string>
     <string name="power">power</string>
+    <string name="pow">pow</string>
     <string name="level">level</string>
+    <string name="lvl">lvl</string>
     <string name="players">Players</string>
     <string name="monsters">Monsters</string>
     <string name="not_enough_players_error">Game need to have at least 2 players</string>
@@ -43,4 +45,5 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="auto">Auto</string>
+    <string name="protected_levels">Protected levels</string>
 </resources>

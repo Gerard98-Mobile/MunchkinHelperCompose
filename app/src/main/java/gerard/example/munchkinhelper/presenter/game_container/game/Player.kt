@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import gerard.example.munchkinhelper.R
 import gerard.example.munchkinhelper.model.Player
+import gerard.example.munchkinhelper.ui.MHIcon
 import gerard.example.munchkinhelper.ui.components.PrimaryBorder
 import gerard.example.munchkinhelper.ui.components.SpacerW
 import gerard.example.munchkinhelper.ui.components.image.ResIcon
@@ -47,14 +48,14 @@ fun PlayersHeader() = Column(
     ) {
         Spacer(modifier = Modifier.weight(0.5f))
         Text(
-            text = R.string.power.str(),
-            modifier = Modifier.weight(0.2f),
+            text = R.string.pow.str(),
+            modifier = Modifier.weight(0.15f),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.primary
         )
         Text(
-            text = R.string.level.str(),
-            modifier = Modifier.weight(0.2f),
+            text = R.string.lvl.str(),
+            modifier = Modifier.weight(0.15f),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.primary
         )
@@ -65,6 +66,7 @@ fun PlayersHeader() = Column(
                 .weight(0.1f),
             tint = MaterialTheme.colorScheme.primary
         )
+        Spacer(Modifier.weight(0.1f))
     }
 }
 
@@ -117,7 +119,10 @@ private fun PlayerContent(
     player: Player,
     isLeader: Boolean
 ) {
-    Row(Modifier.padding(PLAYER_ENTRY_PADDING)) {
+    Row(
+        modifier = Modifier.padding(PLAYER_ENTRY_PADDING),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Row(Modifier.weight(0.5f)) {
             if (isLeader) {
                 ResImage(
@@ -136,13 +141,13 @@ private fun PlayerContent(
 
         Text(
             text = player.powerWithLevel.toString(),
-            modifier = Modifier.weight(0.2f),
+            modifier = Modifier.weight(0.15f),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.primary
         )
         Text(
             text = player.level.toString(),
-            modifier = Modifier.weight(0.2f),
+            modifier = Modifier.weight(0.15f),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.primary
         )
@@ -153,5 +158,11 @@ private fun PlayerContent(
             color = MHColor.default_dark
         )
 
+        if (player.protected) {
+            MHIcon.Shield(Modifier.size(20.dp).weight(0.1f))
+        }
+        else {
+            Spacer(Modifier.weight(0.1f))
+        }
     }
 }

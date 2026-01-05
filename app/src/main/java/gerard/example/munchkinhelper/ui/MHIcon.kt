@@ -1,8 +1,11 @@
 package gerard.example.munchkinhelper.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import gerard.example.munchkinhelper.R
 import gerard.example.munchkinhelper.ui.components.image.ClickableResIcon
+import gerard.example.munchkinhelper.ui.components.image.ResIcon
 
 
 object MHIcon {
@@ -15,5 +18,8 @@ object MHIcon {
 
     @Composable
     fun Plus(onClick: () -> Unit) = ClickableResIcon(id = R.drawable.ic_add, onClick = onClick)
+
+    @Composable
+    fun Shield(modifier: Modifier = Modifier) = ResIcon(modifier = modifier, id = R.drawable.ic_shield, tint = MaterialTheme.colorScheme.primary)
 
 }

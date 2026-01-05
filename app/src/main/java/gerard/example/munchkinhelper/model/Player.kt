@@ -2,6 +2,7 @@ package gerard.example.munchkinhelper.model
 
 data class Player(
     val name: String,
+    val protected: Boolean = true,
     val level: Int = STARTING_LEVEL,
     val power: Int = STARTING_POWER,
     val deaths: Int = STARTING_DEATHS
@@ -22,11 +23,13 @@ data class Player(
         deaths = deaths + 1,
         level = STARTING_LEVEL,
         power = STARTING_POWER,
+        protected = true
     )
 
     fun reset(): Player = this.copy(
         deaths = STARTING_DEATHS,
         level = STARTING_LEVEL,
         power = STARTING_POWER,
+        protected = true
     )
 }
