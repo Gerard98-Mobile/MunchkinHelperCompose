@@ -46,4 +46,5 @@
     <string name="dark">Dark</string>
     <string name="auto">Auto</string>
     <string name="protected_levels">Protected levels</string>
+    <string name="exit">Exit</string>
 </resources>

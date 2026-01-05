@@ -96,6 +96,9 @@ private fun SettingsContent(
         SettingsButton(R.string.reset_game) {
             viewModel.changeVisibleBottomSheet(resetGameBottomSheet)
         },
+        SettingsButton(R.string.exit) {
+            AppScreen.Home.navigate(navController)
+        }
     )
 
     LazyColumn(
