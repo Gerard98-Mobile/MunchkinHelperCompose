@@ -4,7 +4,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,31 +30,36 @@ fun HomeScreen(
 private fun HomeContent(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
-) = Column(Modifier.fillMaxSize()) {
-    val state by viewModel.state.collectAsState()
+) {
+    Scaffold { padding ->
+        Column(Modifier.padding(padding).fillMaxSize()) {
+            val state by viewModel.state.collectAsState()
 
-    ColumnCentered(
-        Modifier
-            .weight(1f)
-            .fillMaxWidth()
-    ) {
-        Card {
-            Logo()
-        }
-    }
-    ColumnCentered(
-        Modifier
-            .weight(1f)
-            .fillMaxWidth()
-    ) {
-        MHButton(R.string.new_game) {
-            AppScreen.NewGame.navigate(navController)
-        }
-        AnimatedVisibility(visible = state.previousGame != null) {
-            MHButton(R.string.load_game) {
-                AppScreen.Game.navigate(navController)
+            ColumnCentered(
+                Modifier
+                    .weight(0.6f)
+                    .fillMaxWidth()
+            ) {
+                Card {
+                    Logo()
+                }
+            }
+            ColumnCentered(
+                Modifier
+                    .weight(0.4f)
+                    .fillMaxWidth()
+            ) {
+                MHButton(R.string.new_game) {
+                    AppScreen.NewGame.navigate(navController)
+                }
+                AnimatedVisibility(visible = state.previousGame != null) {
+                    MHButton(R.string.load_game) {
+                        AppScreen.Game.navigate(navController)
+                    }
+                }
             }
         }
     }
+
 }
 

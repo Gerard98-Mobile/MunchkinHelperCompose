@@ -108,21 +108,24 @@ private fun NewGameScreenContent(
 
     val state = viewModel.state.collectAsState().value
 
-    SafeLevels(
-        levels = state.safeLevels,
-        increaseSaveLevels = { viewModel.increaseSafeLevels() }
-    )
-
-    NewPlayerTextField(
-        viewModel = viewModel
-    )
-
-    NewGameHintBox()
-
     LazyColumn(
         modifier = Modifier.weight(1f),
         contentPadding = PaddingValues(bottom = 40.dp)
     ) {
+
+        item {
+            SafeLevels(
+                levels = state.safeLevels,
+                increaseSaveLevels = { viewModel.increaseSafeLevels() }
+            )
+
+            NewPlayerTextField(
+                viewModel = viewModel
+            )
+
+            NewGameHintBox()
+        }
+
         stickyHeader {
             TransparentGradientSpacerH(dp = 5.dp)
         }
