@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -44,6 +45,7 @@ import gerard.example.munchkinhelper.ui.components.image.ClickableResIcon
 import gerard.example.munchkinhelper.ui.components.image.ResIcon
 import gerard.example.munchkinhelper.ui.components.text.AutoSizeText
 import gerard.example.munchkinhelper.ui.defaults.MHCardDefaults
+import gerard.example.munchkinhelper.util.isLandscape
 
 
 @Composable
@@ -117,6 +119,26 @@ fun GameScreenContent(
                     }
                 ) {
                     DiceFive(Modifier.size(48.dp))
+                }
+
+                if (isLandscape() && state.selected != null) {
+                    Card(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(10.dp),
+                        border = PrimaryBorder(),
+                        colors = CardDefaults.cardColors().copy(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                        ),
+                        onClick = {
+                            viewModel.select(null)
+                        }
+                    ) {
+                        ResIcon(
+                            modifier = Modifier.padding(12.dp),
+                            id = R.drawable.ic_arrow_down
+                        )
+                    }
                 }
             }
 
@@ -239,6 +261,9 @@ private fun ModificationButton(
 ) {
     Card(
         border = PrimaryBorder(),
+        colors = CardDefaults.cardColors().copy(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
         onClick = onClick
     ) {
         ResIcon(

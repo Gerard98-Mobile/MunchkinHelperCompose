@@ -68,7 +68,7 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    fun select(player: Player) {
+    fun select(player: Player?) {
         _state.value = _state.value.copy(selected = player)
     }
 
