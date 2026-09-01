@@ -14,7 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import gerard.example.munchkinhelper.R
 import gerard.example.munchkinhelper.presenter.manage_game.AddPlayerRow
@@ -82,7 +82,7 @@ private fun ColumnScope.EditGameContent(
                             viewModel.updatePlayerName(player, it)
                         })
                     }
-                    .animateItemPlacement(),
+                    .animateItem(),
                 onRemoveClick = {
                     viewModel.changeVisibleBottomSheet(EditGameBottomSheet.RemovePlayer(player))
                 }
@@ -100,9 +100,7 @@ private fun ColumnScope.EditGameContent(
     }
     SpacerH(dp = 10.dp)
 
-    state.visibleBottomSheets?.let {
-        it.content(viewModel)
-    }
+    state.visibleBottomSheets?.content(viewModel)
 
 }
 

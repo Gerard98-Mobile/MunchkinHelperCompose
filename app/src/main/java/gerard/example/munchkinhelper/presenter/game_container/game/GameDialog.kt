@@ -2,7 +2,8 @@ package gerard.example.munchkinhelper.presenter.game_container.game
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import gerard.example.munchkinhelper.model.Player
 import gerard.example.munchkinhelper.presenter.game_container.death.DeathBottomSheet
 import gerard.example.munchkinhelper.presenter.game_container.dice.DiceBottomSheet
@@ -62,8 +63,9 @@ private fun DiceDialogContent(
 private fun FightDialogContent(
     viewModel: GameViewModel = hiltViewModel()
 ){
+    val state = viewModel.state.collectAsState()
     FightDialog(
-        initialValue = viewModel.state.value.selected?.powerWithLevel
+        initialValue = state.value.selected?.powerWithLevel
     ) {
         viewModel.hideDialog()
     }

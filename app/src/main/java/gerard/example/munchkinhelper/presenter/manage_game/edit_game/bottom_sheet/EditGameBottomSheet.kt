@@ -1,7 +1,7 @@
 package gerard.example.munchkinhelper.presenter.manage_game.edit_game.bottom_sheet
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import gerard.example.munchkinhelper.R
 import gerard.example.munchkinhelper.model.Player
 import gerard.example.munchkinhelper.presenter.manage_game.edit_game.EditGameViewModel

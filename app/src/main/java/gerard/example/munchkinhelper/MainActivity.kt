@@ -15,7 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import gerard.example.munchkinhelper.navigation.AppNavHost
 import gerard.example.munchkinhelper.ui.theme.AppTheme
 import gerard.example.munchkinhelper.ui.theme.AppThemeType
